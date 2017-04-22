@@ -1,11 +1,12 @@
 import csv
 import cv2
 import numpy as np
+
 lines = []
 with open('../data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
     for line in reader:
-        lines.append(line)
+      lines.append(line)
 
 images =[]
 measurements = []
@@ -24,7 +25,6 @@ X_train = np.array(images)
 y_train = np.array(measurements)
 
 
-
 # crop the images to 64*64
 
 
@@ -35,12 +35,13 @@ y_train = np.array(measurements)
 # Architectures
 ## Simple Model
 from keras.models import Sequential,Model
-from keras.layers import Flatten, Dense,Lambda
-from keras.layers import Convolution2D
-from keras.pooling import Convolution2D
+from keras.layers.convolutional import Convolution2D
+from keras.layers import Dense, Activation, Dropout, MaxPooling2D, Flatten, Lambda, ELU
+from keras.layers.core import Dropout, Lambda
+from keras.layers.convolutional import Convolution2D, Cropping2D
+from keras.optimizers import Adam
 
-
-model = Sequential
+model = Sequential()
 model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
 model.add(Flatten())
 model.add(Dense(1))
@@ -48,7 +49,7 @@ model.add(Dense(1))
 model.compile(loss='mse',optimizer='adam')
 
 #trian the model
-model.fit(X_train,y_train,validation_split=0.2,shufffle=TRUE,nb_epoch=7)
+model.fit(X_train,y_train,validation_split=0.2,shuffle=True,nb_epoch=5)
 
 model.save('model.h5')
 
