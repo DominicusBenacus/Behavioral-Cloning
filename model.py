@@ -9,7 +9,8 @@ import pandas as pd
 # ================================================================================================================
 local_project_path = '/'
 # load balanced data set
-data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log_balanced.csv'))
+#data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log_balanced.csv'))
+data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log.csv'))
 # Split data into training and validation set
 X_train, y_valid = model_selection.train_test_split(data_set, test_size=.2)
 
@@ -33,7 +34,7 @@ shifting = True
 shift_delta = 8 if shifting else 0
 
 ### Convolution layers and parameters were taken from the "nvidia paper" on end-to-end autonomous steering.
-model.add(Cropping2D(cropping=((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (0,0)), input_shape=(160,320,3)))
+model.add(Cropping2D(cropping=((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (0,0)), input_shape=(160,320,3))
 model.add(Lambda(resize_normalize(image),input_shape=(160,320,3)))
 model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))
 model.add(Convolution2D(36, 5, 5, name='conv2', subsample=(2, 2), activation=nonlinear))
@@ -87,18 +88,18 @@ def save_model(name):
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 ## plot the training and validation loss for each epoch
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('model mean squared error loss')
-    plt.ylabel('mean squared error loss')
-    plt.xlabel('epoch')
-    plt.legend(['training set', 'validation set'], loc='upper right')
-    plt.show()
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model mean squared error loss')
+plt.ylabel('mean squared error loss')
+plt.xlabel('epoch')
+plt.legend(['training set', 'validation set'], loc='upper right')
+plt.show()
     
-    val_loss = history.history['val_loss'][0]
-    if val_loss < val_best:
-        val_best = val_loss
+val_loss = history.history['val_loss'][0]
+if val_loss < val_best:
+    val_best = val_loss
         
-        save_model("model")
+    save_model("model")
         
     print('Time: ', time + 1)
