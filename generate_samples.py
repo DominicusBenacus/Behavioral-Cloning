@@ -13,7 +13,7 @@ def generate_samples(data, root_path, augment=True):
     - use images from all camera. Make the data set three times bigger
         - 
     """
-while True:
+    while True:
         # set up some parameter for dealing with the different camera positions
         cameras = ['left', 'center', 'right']
         left_right_steering_correction = [.25, 0., -.25]
