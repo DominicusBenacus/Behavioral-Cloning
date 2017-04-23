@@ -1,11 +1,14 @@
+import random
 import csv
 import cv2
 import numpy as np
 import os
 import pandas as pd
 from sklearn import model_selection
-import generate_samples
-import resize_normalize
+from resize_nomalize import resize_normalize
+from generate_samples import generate_samples
+#import generate_samples
+#import resize_normalize
 import random
 # ================================================================================================================
 # Read in rough balanced data Set
@@ -29,9 +32,10 @@ from keras.layers.core import Dropout, Lambda
 from keras.layers.convolutional import Convolution2D, Cropping2D
 from keras.optimizers import Adam
 from keras import models, optimizers, backend
-
+print('I am before call of architecture')
 
 def architecture():
+    print('I am inside call of architecture')
     #initialize model
     model = Sequential()
     dropout = 0.5
@@ -39,10 +43,13 @@ def architecture():
     shifting = True
     ### Randomly shift up and down while preprocessing
     shift_delta = 8 if shifting else 0
-
+    print('I am before call of cropping layer')
     ### Convolution layers and parameters were taken from the "nvidia paper" on end-to-end autonomous steering.
-    model.add(Cropping2D(cropping=(((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (0,0)), input_shape=(160,320,3)))
-    model.add(Lambda(resize_normalize(image),input_shape=(160,320,3)))
+    model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=(160,320,3)))
+
+    #model.add(Cropping2D(cropping=(((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (1,1)), input_shape=(160,320,3)))
+    print('I am before call of Lambda')
+    model.add(Lambda(lambda x: resize_normalize(x),input_shape=(160,320,3),output_shape=(66, 200, 3)))
     model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))
     model.add(Convolution2D(36, 5, 5, name='conv2', subsample=(2, 2), activation=nonlinear))
     model.add(Convolution2D(48, 5, 5, name='conv3', subsample=(2, 2), activation=nonlinear))
