@@ -24,14 +24,6 @@ for line in lines:
 X_train = np.array(images)
 y_train = np.array(measurements)
 
-
-# crop the images to 64*64
-
-
-
-# normalize and meancenter the images
-
-
 # Architectures
 ## Simple Model
 from keras.models import Sequential,Model
@@ -53,14 +45,18 @@ model.fit(X_train,y_train,validation_split=0.2,shuffle=True,nb_epoch=5)
 
 model.save('model.h5')
 
-## The Nvidia architecture like described im here https://arxiv.org/pdf/1604.07316.pdf
-
+### The Nvidia architecture like described im here https://arxiv.org/pdf/1604.07316.pdf
+#
 #model = Sequential()
 #dropout = 0.5
 #nonlinear = 'tanh'
+#shifting = True
+#### Randomly shift up and down while preprocessing
+#shift_delta = 8 if shifting else 0
 #
 #### Convolution layers and parameters were taken from the "nvidia paper" on end-to-end autonomous steering.
-#model.add(Lambda(normalize, input_shape=(160, 320, 3), output_shape=(66, 200, 3)))
+#model.add(Cropping2D(cropping=((random.uniform(60 - shift_delta , .60 + shift_delta)),(random.uniform(20 - shift_delta , .20 + shift_delta))), (0,0)), input_shape=(160,320,3)))
+#model.add(Lambda(resize_normalize(image),input_shape=(160,320,3)))
 #model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))
 #model.add(Convolution2D(36, 5, 5, name='conv2', subsample=(2, 2), activation=nonlinear))
 #model.add(Convolution2D(48, 5, 5, name='conv3', subsample=(2, 2), activation=nonlinear))
@@ -84,10 +80,22 @@ model.save('model.h5')
 #
 #return model
 
+## Save Model
+#
+#
+#from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, LambdaCallback, Callback
+#from pathlib import Path
+#import json
+#    
+#def save_model(name):
+#    
+#    with open(name + '.json', 'w') as output:
+#        output.write(model.to_json())
+#
+#    model.save(name + '.h5')
 
-# train the model
 
-
+#
 ## evaluate the trainig results
 #import matplotlib.pyplot as plt
 #import matplotlib.image as mpimg
