@@ -3,11 +3,15 @@ import cv2
 import numpy as np
 import os
 import pandas as pd
-
+from sklearn import model_selection
+import generate_samples
+import resize_normalize
+import random
 # ================================================================================================================
 # Read in rough balanced data Set
 # ================================================================================================================
-local_project_path = '/'
+local_project_path = '../'
+local_data_path = os.path.join(local_project_path, 'data')
 # load balanced data set
 #data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log_balanced.csv'))
 data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log.csv'))
@@ -24,6 +28,8 @@ from keras.layers import Dense, Activation, Dropout, MaxPooling2D, Flatten, Lamb
 from keras.layers.core import Dropout, Lambda
 from keras.layers.convolutional import Convolution2D, Cropping2D
 from keras.optimizers import Adam
+from keras import models, optimizers, backend
+
 
 def architecture():
     #initialize model
@@ -35,7 +41,7 @@ def architecture():
     shift_delta = 8 if shifting else 0
 
     ### Convolution layers and parameters were taken from the "nvidia paper" on end-to-end autonomous steering.
-    model.add(Cropping2D(cropping=((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (0,0)), input_shape=(160,320,3))
+    model.add(Cropping2D(cropping=(((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (0,0)), input_shape=(160,320,3)))
     model.add(Lambda(resize_normalize(image),input_shape=(160,320,3)))
     model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))
     model.add(Convolution2D(36, 5, 5, name='conv2', subsample=(2, 2), activation=nonlinear))
@@ -77,6 +83,9 @@ def save_model(name):
 # ================================================================================================================
 numTimes = 1
 val_best = 999
+model = architecture()
+num_epochs= 15
+
 for time in range(numTimes):
     
     #print('number of training data: ', len(X_train))
@@ -88,7 +97,7 @@ for time in range(numTimes):
     history = model.fit_generator(
             generate_samples(X_train, local_data_path),
             samples_per_epoch=X_train.shape[0],
-            nb_epoch=15,
+            nb_epoch=num_epochs,
             validation_data=generate_samples(y_valid, local_data_path, augment=False),
             nb_val_samples=y_valid.shape[0]
             )
