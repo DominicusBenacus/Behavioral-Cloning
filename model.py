@@ -13,7 +13,7 @@ measurements = []
 for line in lines:
     source_path = line[0]
     filename= source_path.split('/')[-1]
-    current_path = '../data/IMG' + filename
+    current_path = '../data/IMG/' + filename
     image = cv2.imread(current_path)
     images.append(image)
     
@@ -41,7 +41,13 @@ model.add(Dense(1))
 model.compile(loss='mse',optimizer='adam')
 
 #trian the model
-model.fit(X_train,y_train,validation_split=0.2,shuffle=True,nb_epoch=5)
+from sklearn.utils import shuffle
+#X_train, y_train = shuffle(X_train, y_train, random_state=348202)
+
+X_train_small = X_train[0:1000]
+y_train_small = y_train[0:1000]
+#model.fit(X_train,y_train,validation_split=0.2,shuffle=True,nb_epoch=5)
+model.fit(X_train_small,y_train_small,validation_split=0.2,shuffle=True,nb_epoch=3)
 
 model.save('model.h5')
 
