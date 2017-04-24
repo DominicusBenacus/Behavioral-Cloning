@@ -36,6 +36,10 @@ def generate_samples(data, root_path, augment=True):
                 # Append to batch
                 x = np.append(x, [image], axis=0)
                 y = np.append(y, [steering_angle])
+                x_shape = x[0].shape
+                print("Image data shape =", x_shape)
+
+
             # Randomly flip half of images in the batch
             flip_indices = random.sample(range(x.shape[0]), int(x.shape[0] / 2))
             x[flip_indices] = np.fliplr(x[flip_indices])
