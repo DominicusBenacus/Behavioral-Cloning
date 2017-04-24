@@ -45,9 +45,10 @@ def architecture():
     shift_delta = 8 if shifting else 0
     print('I am before call of cropping layer')
     ### Convolution layers and parameters were taken from the "nvidia paper" on end-to-end autonomous steering.
+    #model.add(Cropping2D(cropping=(((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (1,1)), input_shape=(160,320,3)))
+
     model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=(160,320,3)))
 
-    #model.add(Cropping2D(cropping=(((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (1,1)), input_shape=(160,320,3)))
     print('I am before call of Lambda')
     model.add(Lambda(lambda x: resize_normalize(x),input_shape=(160,320,3),output_shape=(66, 200, 3)))
     model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))

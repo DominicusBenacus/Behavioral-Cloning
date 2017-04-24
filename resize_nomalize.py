@@ -3,6 +3,8 @@ import random
 import matplotlib.image as mpimg
 import os
 import cv2
+from keras.backend import tf as ktf
+
 
 def resize_normalize(image):
     """
@@ -10,9 +12,9 @@ def resize_normalize(image):
     portions of image, resizes to 66*200 px and scales pixel values to [0, 1].
     """
     # resize
-    image = cv2.resize(image, (66, 200))
-
+    #image = cv2.resize(image, (66, 200)) #first try
+    resized = ktf.image.resize_images(image, (66, 200))
     #normalize
-    image = (image / 255.0) - 0.5
+    image = image/255.0 - 0.5
 
     return image
