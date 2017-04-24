@@ -42,7 +42,7 @@ def generate_samples(data, root_path, augment=True):
                 print("image shape after cv2.imread = ", x_shape)
                 steering_angle = data.steering.values[i] + left_right_steering_correction[camera]
                 x_shape = x.shape
-                print("image shape after creation of np.empty array = ", x_shape)
+                print("image read of steering angle = ", x_shape)
 		# Append to batch
                 x = np.append(x, [image], axis=0)
                 y = np.append(y, [steering_angle])
