@@ -71,7 +71,7 @@ def architecture():
     model.add(Dense(1, name='output', activation=nonlinear))    
     
     model.compile(optimizer='adam', loss='mse')
-
+    print('I am finished build the model')
     return model
 
 # Save Model
@@ -85,7 +85,7 @@ def save_model(name):
         output.write(model.to_json())
 
     model.save(name + '.h5')
-
+    print('I saved the model')
 # ================================================================================================================
 # Training
 # ================================================================================================================
@@ -101,6 +101,7 @@ for time in range(numTimes):
     print('samples_per_epoch:', X_train.shape[0])
     print('nb_val_samples:', y_valid.shape[0])
     print('number of epochs:', 15)
+    print('I am before call of model.fit generator')
     # training pipeline with keras
     history = model.fit_generator(
             generate_samples(X_train, local_data_path),
@@ -110,7 +111,7 @@ for time in range(numTimes):
             nb_val_samples=y_valid.shape[0]
             )
 
-
+    print('Model fit generator finished')
     print(history.history.keys())
     # ================================================================================================================
     # Evaluation of the trainig results
@@ -118,6 +119,7 @@ for time in range(numTimes):
     import matplotlib.pyplot as plt
     import matplotlib.image as mpimg
     ## plot the training and validation loss for each epoch
+    print('I am ready to plot the evaluation')
     plt.plot(history.history['loss'])
     plt.plot(history.history['val_loss'])
     plt.title('model mean squared error loss')
