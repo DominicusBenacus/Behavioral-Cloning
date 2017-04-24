@@ -25,7 +25,7 @@ def generate_samples(data, root_path, augment=True):
             batch_indices = indices[batch:(batch + batch_size)]
             # Output arrays
             x = np.empty([0, 160, 320, 3], dtype=np.float32)
-            x_shape = x.[0]shape
+            x_shape = x[0].shape
             print("image shape after creation of np.empty array = ", x_shape)
             y = np.empty([0], dtype=np.float32)
             # Read in and preprocess a batch of images
