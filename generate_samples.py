@@ -4,6 +4,10 @@ import random
 import cv2
 import os
 
+# set up some parameter for dealing with the different camera positions
+cameras = ['left', 'center', 'right']
+left_right_steering_correction = [.25, 0., -.25]
+
 def generate_samples(data, root_path, augment=True):
     """
     Keras generator yielding batches of training/validation data.
@@ -14,9 +18,6 @@ def generate_samples(data, root_path, augment=True):
         - 
     """
     while True:
-        # set up some parameter for dealing with the different camera positions
-        cameras = ['left', 'center', 'right']
-        left_right_steering_correction = [.25, 0., -.25]
         # Generate random batch of indices
         indices = np.random.permutation(data.count()[0])
         batch_size = 128
