@@ -41,4 +41,5 @@ def generate_samples(data, root_path, augment=True):
             x[flip_indices] = np.fliplr(x[flip_indices])
             #x[flip_indices] = cv2.flip(x[flip_indices],1)
             y[flip_indices] = -y[flip_indices]
+	    print('shape of x arry',x[0].shape)
             yield (x, y)
