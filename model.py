@@ -7,6 +7,7 @@ import pandas as pd
 from sklearn import model_selection
 from resize_nomalize import resize_normalize
 from generate_samples import generate_samples
+import tensorflow as tf
 #import generate_samples
 #import resize_normalize
 import random

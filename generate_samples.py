@@ -33,23 +33,12 @@ def generate_samples(data, root_path, augment=True):
                 # Read frame image and work out steering angle
                 image = cv2.imread(os.path.join(root_path, data[cameras[camera]].values[i].strip()))
                 steering_angle = data.steering.values[i] + left_right_steering_correction[camera]
-                if augment:
-                    # Add random shadow as a vertical slice of image
-                    h, w = image.shape[0], image.shape[1]
-                    [x1, x2] = np.random.choice(w, 2, replace=False)
-                    k = h / (x2 - x1)
-                    b = - k * x1
-                    for i in range(h):
-                        c = int((i - b) / k)
-                        image[i, :c, :] = (image[i, :c, :] * .5).astype(np.int32)
                 # Append to batch
                 x = np.append(x, [image], axis=0)
                 y = np.append(y, [steering_angle])
             # Randomly flip half of images in the batch
             flip_indices = random.sample(range(x.shape[0]), int(x.shape[0] / 2))
-            #x[flip_indices] = x[flip_indices, :, ::-1, :]
-            #y[flip_indices] = -y[flip_indices]
-            #x[flip_indices] = np.fliplr(x[flip_indices])
-            x[flip_indices] = cv2.flip(x[flip_indices],1)
+            x[flip_indices] = np.fliplr(x[flip_indices])
+            #x[flip_indices] = cv2.flip(x[flip_indices],1)
             y[flip_indices] = -y[flip_indices]
             yield (x, y)
