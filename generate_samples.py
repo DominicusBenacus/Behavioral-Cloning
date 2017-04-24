@@ -25,28 +25,28 @@ def generate_samples(data, root_path, augment=True):
             batch_indices = indices[batch:(batch + batch_size)]
             # Output arrays
             x = np.empty([0, 160, 320, 3], dtype=np.float32)
-            x_shape = x[0].shape
+            x_shape = x.shape
             print("image shape after creation of np.empty array = ", x_shape)
             y = np.empty([0], dtype=np.float32)
             # Read in and preprocess a batch of images
             for i in batch_indices:
-                x_shape = x[0].shape
+                x_shape = x.shape
                 print("image shape direct after enter the for loop = ", x_shape)
                 # Randomly select camera
                 camera = np.random.randint(len(cameras)) if augment else 1
-                x_shape = x[0].shape
+                x_shape = x.shape
                 print("image shape after random selection of camera = ", x_shape)
                 # Read frame image and work out steering angle
                 image = cv2.imread(os.path.join(root_path, data[cameras[camera]].values[i].strip()))
-                x_shape = x[0].shape
+                x_shape = x.shape
                 print("image shape after cv2.imread = ", x_shape)
                 steering_angle = data.steering.values[i] + left_right_steering_correction[camera]
-                x_shape = x[0].shape
+                x_shape = x.shape
                 print("image shape after creation of np.empty array = ", x_shape)
 		# Append to batch
                 x = np.append(x, [image], axis=0)
                 y = np.append(y, [steering_angle])
-            x_shape = x[0].shape
+            x_shape = x.shape
             print("Image data shape ater np.append(x,[image],axis=0)=", x_shape)
 
 
@@ -55,6 +55,6 @@ def generate_samples(data, root_path, augment=True):
             x[flip_indices] = np.fliplr(x[flip_indices])
             #x[flip_indices] = cv2.flip(x[flip_indices],1)
             y[flip_indices] = -y[flip_indices]
-            x_shape = x[0].shape
+            x_shape = x.shape
             print("Image data shape after flipping images vertical =", x_shape)
             yield (x, y)
