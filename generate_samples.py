@@ -21,7 +21,7 @@ def generate_samples(data, root_path, augment=True):
     """
     samples = data
     num_samples = len(data)
-    print('kind of indices', samples)
+    #print('kind of indices', samples)
     batch_size = 128
     while True:
         #Generate random batch of indices
@@ -34,7 +34,9 @@ def generate_samples(data, root_path, augment=True):
             print("image shape after creation of np.empty array = ", x_shape)
             y = np.empty([0], dtype=np.float32)
             # Read in and preprocess a batch of images
-            # for batch_sample in batch_samples:
+            for batch_sample in batch_samples:
+                image = cv2.imread(batch_sample[0].strip())
+                steering_angle = float(batch_sample[1])
             #     x_shape = x.shape
             #     print("image shape direct after enter the for loop = ", x_shape)
             #     # Randomly select camera
@@ -51,8 +53,8 @@ def generate_samples(data, root_path, augment=True):
             #     x_shape = x.shape
             #     print("image read of steering angle = ", x_shape)
 	        #     # Append to batch
-            #     x = np.append(x, [image], axis=0)
-            #     y = np.append(y, [steering_angle])
+                x = np.append(x, [image], axis=0)
+                y = np.append(y, [steering_angle])
             # x_shape = x.shape
             # print("Image data shape ater np.append(x,[image],axis=0)=", x_shape)
 
