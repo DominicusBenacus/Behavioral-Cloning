@@ -53,7 +53,7 @@ def generate_samples(data, root_path, augment=True):
             #     x_shape = x.shape
             #     print("image shape after cv2.imread = ", x_shape)
             #     steering_angle = samples.steering.values[batch_sample] + left_right_steering_correction[camera]
-                steering_angle = float(batch_sample['steering']) + left_right_steering_correction[camera]
+                steering_angle = float(batch_sample[STEERING_ANGLE]) + left_right_steering_correction[camera]
                 print('we are now after reading steering_angle')
 
 
