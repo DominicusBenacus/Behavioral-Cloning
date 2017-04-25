@@ -19,9 +19,19 @@ local_project_path = '../'
 local_data_path = os.path.join(local_project_path, 'data')
 # load balanced data set
 #data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log_balanced.csv'))
-data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log.csv'))
+#data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log.csv'))
+samples = []
+with open('../data/driving_log1.csv') as csvfile:
+    reader = csv.reader(csvfile)
+    for line in reader:
+        samples.append(line)
+
+# delete the first row which has column names like 'left', 'steering' etc
+del(samples[0])
+
+X_train, y_valid = train_test_split(samples, test_size=0.2)
 # Split data into training and validation set
-X_train, y_valid = model_selection.train_test_split(data_set, test_size=.2)
+#X_train, y_valid = model_selection.train_test_split(data_set, test_size=.2)
 
 # ================================================================================================================
 # Model Architectures
