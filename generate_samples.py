@@ -20,9 +20,11 @@ def generate_samples(data, root_path, augment=True):
     while True:
         # Generate random batch of indices
         indices = np.random.permutation(data.count()[0])
-        batch_size = 128
+        print('kind of indices', indices)
+       ''' batch_size = 128
         for batch in range(0, len(indices), batch_size):
             batch_indices = indices[batch:(batch + batch_size)]
+            
             # Output arrays
             x = np.empty([0, 160, 320, 3], dtype=np.float32)
             x_shape = x.shape
@@ -56,5 +58,9 @@ def generate_samples(data, root_path, augment=True):
             #x[flip_indices] = cv2.flip(x[flip_indices],1)
             y[flip_indices] = -y[flip_indices]
             x_shape = x.shape
-            print("Image data shape after flipping images vertical =", x_shape)
+            print("Image data shape after flipping images vertical =", x_shape)'''
+            x = np.empty([0, 160, 320, 3], dtype=np.float32)
+            x_shape = x.shape
+            print("image shape after creation of np.empty array = ", x_shape)
+            y = np.empty([0], dtype=np.float32)
             yield (x, y)
