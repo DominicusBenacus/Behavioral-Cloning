@@ -20,16 +20,32 @@ local_data_path = os.path.join(local_project_path, 'data')
 # load balanced data set
 #data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log_balanced.csv'))
 #data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log.csv'))
-samples = []
-with open('../data/driving_log1.csv') as csvfile:
+lines = []
+with open('../data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
     for line in reader:
-        samples.append(line)
+      lines.append(line)
+
+images =[]
+measurements = []
+for line in lines:
+    source_path = line[0]
+    filename= source_path.split('/')[-1]
+    current_path = '../data/IMG/' + filename
+    image = cv2.imread(current_path)
+    images.append(image)
+    
+    measurement = float(line[3])
+    measurements.append(measurement)
+
+
+X_train = np.array(images)
+y_train = np.array(measurements)
 
 # delete the first row which has column names like 'left', 'steering' etc
-del(samples[0])
+del(lines[0])
 
-X_train, y_valid = train_test_split(samples, test_size=0.2)
+X_train, y_valid = train_test_split(lines, test_size=0.2)
 # Split data into training and validation set
 #X_train, y_valid = model_selection.train_test_split(data_set, test_size=.2)
 
