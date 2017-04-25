@@ -4,6 +4,8 @@ import random
 import sklearn
 import cv2
 import os
+from random import shuffle
+
 def generator_fernando(samples, batch_size=128):
     samples = shuffle(samples)
     num_samples = len(samples)
