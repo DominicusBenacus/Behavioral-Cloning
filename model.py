@@ -8,6 +8,7 @@ from sklearn import model_selection
 from resize_nomalize import resize_normalize
 from generate_samples import generate_samples
 from generator_fernando import generator_fernando
+from sklearn.model_selection import train_test_split
 import tensorflow as tf
 #import generate_samples
 #import resize_normalize
