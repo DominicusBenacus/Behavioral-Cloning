@@ -29,6 +29,7 @@ def generate_samples(data, root_path, augment=True):
         for batch in range(0, num_samples, batch_size):
             batch_samples = samples[batch:(batch + batch_size)]
             # Output arrays
+            
             x = np.empty([0, 160, 320, 3], dtype=np.float32)
             x_shape = x.shape
             print("image shape after creation of np.empty array = ", x_shape)
@@ -50,7 +51,7 @@ def generate_samples(data, root_path, augment=True):
             #     x_shape = x.shape
             #     print("image shape after cv2.imread = ", x_shape)
             #     steering_angle = samples.steering.values[batch_sample] + left_right_steering_correction[camera]
-                steering_angle = float(batch_sample['steering']) + left_right_steering_correction[camera]
+                steering_angle = batch_sample[int('steering')] + left_right_steering_correction[camera]
                 print('we are now after reading steering_angle')
 
 
