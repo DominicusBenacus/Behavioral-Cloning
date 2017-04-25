@@ -34,7 +34,7 @@ def generate_samples(data, root_path, augment=True):
             print("image shape after creation of np.empty array = ", x_shape)
             y = np.empty([0], dtype=np.float32)
             # Read in and preprocess a batch of images
-            for i in batch_samples:
+            for batch_sample in batch_samples:
                 x_shape = x.shape
                 print("image shape direct after enter the for loop = ", x_shape)
                 # Randomly select camera
@@ -42,10 +42,12 @@ def generate_samples(data, root_path, augment=True):
                 x_shape = x.shape
                 print("image shape after random selection of camera = ", x_shape)
                 # Read frame image and work out steering angle
-                image = cv2.imread(os.path.join(root_path, data[cameras[camera]].values[i].strip()))
+                #image = cv2.imread(os.path.join(root_path, data[cameras[camera]].values[i].strip()))
+                image = cv2.imread(data[cameras[camera]].values[batch_sample].strip())
+                #image = cv2.imread(batch_sample[cameras[camera]].strip())
                 x_shape = x.shape
                 print("image shape after cv2.imread = ", x_shape)
-                steering_angle = data.steering.values[i] + left_right_steering_correction[camera]
+                steering_angle = data.steering.values[batch_sample] + left_right_steering_correction[camera]
                 x_shape = x.shape
                 print("image read of steering angle = ", x_shape)
 	            # Append to batch
