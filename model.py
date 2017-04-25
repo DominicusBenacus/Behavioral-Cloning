@@ -48,10 +48,10 @@ def architecture():
     ### Convolution layers and parameters were taken from the "nvidia paper" on end-to-end autonomous steering.
     #model.add(Cropping2D(cropping=(((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (1,1)), input_shape=(160,320,3)))
 
-    model.add(Cropping2D(cropping=((60,20), (0,0)), input_shape=(160,320,3)))
+    model.add(Cropping2D(cropping=((60,20), (1,1)), input_shape=(160,320,3)))
 
     print('I am before call of Lambda')
-    model.add(Lambda(lambda x: resize_normalize(x),input_shape=(80,320,3),output_shape=(66, 200, 3)))
+    model.add(Lambda(lambda x: resize_normalize(x),input_shape=(80,318,3),output_shape=(66, 200, 3)))
     model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))
     model.add(Convolution2D(36, 5, 5, name='conv2', subsample=(2, 2), activation=nonlinear))
     model.add(Convolution2D(48, 5, 5, name='conv3', subsample=(2, 2), activation=nonlinear))
