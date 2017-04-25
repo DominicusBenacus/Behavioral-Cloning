@@ -59,8 +59,8 @@ def generate_samples(data, root_path, augment=True):
         #     y[flip_indices] = -y[flip_indices]
         #     x_shape = x.shape
         #     print("Image data shape after flipping images vertical =", x_shape)
-            x = np.empty([0, 160, 320, 3], dtype=np.float32)
-            x_shape = x.shape
-            print("image shape after creation of np.empty array = ", x_shape)
-            y = np.empty([0], dtype=np.float32)
-            yield (x, y)
+        x = np.empty([0, 160, 320, 3], dtype=np.float32)
+        x_shape = x.shape
+        print("image shape after creation of np.empty array = ", x_shape)
+        y = np.empty([0], dtype=np.float32)
+        yield (x, y)
