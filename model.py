@@ -7,6 +7,7 @@ import pandas as pd
 from sklearn import model_selection
 from resize_nomalize import resize_normalize
 from generate_samples import generate_samples
+from generator_fernando import generator_fernando
 import tensorflow as tf
 #import generate_samples
 #import resize_normalize
@@ -104,11 +105,12 @@ for time in range(numTimes):
     print('number of epochs:', 15)
     print('I am before call of model.fit generator')
     # training pipeline with keras
-    history = model.fit_generator(
-            generate_samples(X_train, local_data_path),
+    history = model.fit_generator(generator_fernando(X_train),
+            #generate_samples(X_train, local_data_path),
             samples_per_epoch=X_train.shape[0],
             nb_epoch=num_epochs,
-            validation_data=generate_samples(y_valid, local_data_path, augment=False),
+            #validation_data=generate_samples(y_valid, local_data_path, augment=False),
+            validation_data=generator_fernando(y_valid),
             nb_val_samples=y_valid.shape[0]
             )
 
