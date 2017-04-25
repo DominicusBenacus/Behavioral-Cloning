@@ -19,7 +19,7 @@ def generate_samples(data, root_path, augment=True):
     - use images from all camera. Make the data set three times bigger
     -  
     """
-    samples = shuffle(data)
+    #samples = shuffle(data)
     num_samples = len(samples)
     print('kind of indices', samples)
     batch_size = 128
