@@ -5,6 +5,7 @@ import cv2
 import os
 from random import shuffle
 
+
 # set up some parameter for dealing with the different camera positions
 cameras = ['left', 'center', 'right']
 left_right_steering_correction = [.25, 0., -.25]
@@ -18,18 +19,12 @@ def generate_samples(data, root_path, augment=True):
     - use images from all camera. Make the data set three times bigger
         - 
     """
-    samples = shuffle(data)
-    num_samples = len(data)
-    print('kind of indices', samples)
-    batch_size=128
     while True:
-        for offset in range(0, num_samples, batch_size):
-            batch_samples = samples[offset:offset+batch_size]
-            print('kind of indices', batch_samples)
-
         # Generate random batch of indices
         #indices = np.random.permutation(data.count()[0])
-        #print('kind of indices', indices)
+        samples = shuffle(data)
+
+        print('kind of indices', samples)
         # batch_size = 128
         # for batch in range(0, len(indices), batch_size):
         #     batch_indices = indices[batch:(batch + batch_size)]
@@ -68,8 +63,8 @@ def generate_samples(data, root_path, augment=True):
         #     y[flip_indices] = -y[flip_indices]
         #     x_shape = x.shape
         #     print("Image data shape after flipping images vertical =", x_shape)
-            x = np.empty([0, 160, 320, 3], dtype=np.float32)
-            x_shape = x.shape
-            print("image shape after creation of np.empty array = ", x_shape)
-            y = np.empty([0], dtype=np.float32)
-            yield (x, y)
+        x = np.empty([0, 160, 320, 3], dtype=np.float32)
+        x_shape = x.shape
+        print("image shape after creation of np.empty array = ", x_shape)
+        y = np.empty([0], dtype=np.float32)
+        yield (x, y)
