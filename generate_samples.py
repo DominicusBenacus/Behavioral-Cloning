@@ -44,7 +44,8 @@ def generate_samples(data, root_path, augment=True):
             #     print("image shape after random selection of camera = ", x_shape)
             #     # Read frame image and work out steering angle
             #     #image = cv2.imread(os.path.join(root_path, data[cameras[camera]].values[i].strip()))
-                image = cv2.imread(samples[camera].values[batch_sample].strip())
+                image = cv2.imread(batch_sample[camera].strip())
+                print('we are now after imread')
             #     #image = cv2.imread(batch_sample[cameras[camera]].strip())
             #     x_shape = x.shape
             #     print("image shape after cv2.imread = ", x_shape)
