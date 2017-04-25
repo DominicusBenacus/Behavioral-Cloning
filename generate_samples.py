@@ -39,7 +39,7 @@ def generate_samples(data, root_path, augment=True):
             #     print("image shape direct after enter the for loop = ", x_shape)
             #     # Randomly select camera
                 camera = np.random.randint(len(cameras)) if augment else 1
-                print('shape af choosen camera', camera.shape)
+                print('shape af choosen camera', camera)
             #     x_shape = x.shape
             #     print("image shape after random selection of camera = ", x_shape)
             #     # Read frame image and work out steering angle
