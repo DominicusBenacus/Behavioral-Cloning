@@ -40,18 +40,10 @@ def generate_samples(data, augment=True, batch_size = 128):
                 # Randomly select camera
                 camera = np.random.randint(len(cameras)) if augment else 1
                 print('shape af choosen camera', camera)
-                x_shape = x.shape
-                print("image shape after random selection of camera = ", x_shape)
                 # Read frame image and work out steering angle
                 image = cv2.imread(batch_sample[camera].strip())
-                print('we are now after imread{}:'.format(image))
-                
-                
                 steering_angle = float(batch_sample[STEERING_ANGLE]) + left_right_steering_correction[camera]
-
-                print('we are now after reading steering_angle')
                 print(" value of steering angle: {}:".format(steering_angle))
-
 	            # Append to batch
                 #x = np.append(x, [image], axis=0)
                 #y = np.append(y, [steering_angle])
