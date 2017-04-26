@@ -28,7 +28,7 @@ with open('../data/driving_log.csv') as csvfile:
       lines.append(line)
 del(lines[0])
 
-print(" samples_per_epoch: {}:".format(lines[0]))
+print(" shape of the frist row of lines after imread: {}:".format(lines[0]))
 images =[]
 measurements = []
 for line in lines:
@@ -43,7 +43,9 @@ for line in lines:
 
 
 X_train = np.array(images)
+print(" shape of X_train after readIn: {}:".format(X_train[0].shape))
 y_train = np.array(measurements)
+print(" shape of steering angle after readIn: {}:".format(y_train[0].shape))
 
 # delete the first row which has column names like 'left', 'steering' etc
 del(lines[0])
