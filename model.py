@@ -108,8 +108,7 @@ for time in range(numTimes):
     #print('number of training data: ', len(X_train))
     #print('number of training data:', len(y_valid))
     #print('samples_per_epoch:', X_train.shape)
-    print(" samples_per_epoch: {}:".format(len(train_samples))
-
+    print(" samples_per_epoch: {}:".format(len(train_samples)))
     #print('nb_val_samples:', y_valid.shape)
     print('number of epochs:', num_epochs)
     print('I am before call of model.fit generator')
