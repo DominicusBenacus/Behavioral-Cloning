@@ -22,7 +22,7 @@ def generate_samples(data, augment=True, batch_size = 128):
     -  
     """
     samples = data
-    num_samples = len(data)
+    num_samples = len(samples)
     #print('kind of indices', samples)
     while True:
         #Generate random batch of indices
@@ -59,8 +59,10 @@ def generate_samples(data, augment=True, batch_size = 128):
                 print(" value of steering angle: {}:".format(steering_angle))
 
 	        #   # Append to batch
-                x = np.append(x, [image], axis=0)
-                y = np.append(y, [steering_angle])
+                #x = np.append(x, [image], axis=0)
+                #y = np.append(y, [steering_angle])
+                x = np.append(image)
+                y = np.append(steering_angle)
             # x_shape = x.shape
             # print("Image data shape ater np.append(x,[image],axis=0)=", x_shape)
 
