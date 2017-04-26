@@ -37,34 +37,28 @@ def generate_samples(data, augment=True, batch_size = 128):
             y = np.empty([0], dtype=np.float32)
             # Read in and preprocess a batch of images
             for batch_sample in batch_samples:
-            #     x_shape = x.shape
-            #     print("image shape direct after enter the for loop = ", x_shape)
-            #     # Randomly select camera
+                # Randomly select camera
                 camera = np.random.randint(len(cameras)) if augment else 1
                 print('shape af choosen camera', camera)
                 x_shape = x.shape
                 print("image shape after random selection of camera = ", x_shape)
-            #     # Read frame image and work out steering angle
-            #     #image = cv2.imread(os.path.join(root_path, data[cameras[camera]].values[i].strip()))
+                # Read frame image and work out steering angle
                 image = cv2.imread(batch_sample[camera].strip())
                 print('we are now after imread')
-            #     #image = cv2.imread(batch_sample[cameras[camera]].strip())
-                x_shape = x.shape
-                print("image shape after cv2.imread = ", x_shape)
-            #    steering_angle = samples.steering.values[batch_sample] + left_right_steering_correction[camera]
+                image_shape = image.shape
+                print("image shape after cv2.imread = ", image_shape)
                 steering_angle = float(batch_sample[STEERING_ANGLE]) + left_right_steering_correction[camera]
-            #   steering_angle = batch_sample['steering'] + left_right_steering_correction[camera] #Subodth
 
                 print('we are now after reading steering_angle')
                 print(" value of steering angle: {}:".format(steering_angle))
 
-	        #   # Append to batch
+	            # Append to batch
                 #x = np.append(x, [image], axis=0)
                 #y = np.append(y, [steering_angle])
                 x = np.append(x,image)
                 y = np.append(y,steering_angle)
-            # x_shape = x.shape
-            # print("Image data shape ater np.append(x,[image],axis=0)=", x_shape)
+            x_shape = x.shape
+            print("Image data shape ater np.append(x,[image],axis=0)=", x_shape)
 
             # Randomly flip half of images in the batch
             flip_indices = random.sample(range(x.shape[0]), int(x.shape[0] / 2))
