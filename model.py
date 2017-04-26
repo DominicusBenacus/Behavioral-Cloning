@@ -28,7 +28,7 @@ with open('../data/driving_log.csv') as csvfile:
       lines.append(line)
 del(lines[0])
 
-
+print('shape of lines after inread',lines.shape)
 images =[]
 measurements = []
 for line in lines:
@@ -130,17 +130,19 @@ for time in range(numTimes):
     #print('number of training data: ', len(X_train))
     #print('number of training data:', len(y_valid))
     #print('samples_per_epoch:', X_train.shape)
+    print(" samples_per_epoch: {}:".format(X_train[0].shape))
+
     #print('nb_val_samples:', y_valid.shape)
     print('number of epochs:', num_epochs)
     print('I am before call of model.fit generator')
     # training pipeline with keras
     history = model.fit_generator(#generator_fernando(X_train),
             generate_samples(X_train, local_data_path),
-            samples_per_epoch=X_train.shape[0],
+            samples_per_epoch=X_train[0].shape,
             nb_epoch=num_epochs,
             validation_data=generate_samples(y_valid, local_data_path, augment=False),
             #validation_data=generator_fernando(y_valid),
-            nb_val_samples=y_valid.shape[0]
+            nb_val_samples=y_valid[0].shape
             )
 
     print('Model fit generator finished')
