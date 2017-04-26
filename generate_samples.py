@@ -42,27 +42,23 @@ def generate_samples(data, augment=True, batch_size = 128):
             #     # Randomly select camera
                 camera = np.random.randint(len(cameras)) if augment else 1
                 print('shape af choosen camera', camera)
-            #     x_shape = x.shape
-            #     print("image shape after random selection of camera = ", x_shape)
+                x_shape = x.shape
+                print("image shape after random selection of camera = ", x_shape)
             #     # Read frame image and work out steering angle
             #     #image = cv2.imread(os.path.join(root_path, data[cameras[camera]].values[i].strip()))
                 image = cv2.imread(batch_sample[camera].strip())
                 print('we are now after imread')
             #     #image = cv2.imread(batch_sample[cameras[camera]].strip())
-            #     x_shape = x.shape
-            #     print("image shape after cv2.imread = ", x_shape)
-            #     steering_angle = samples.steering.values[batch_sample] + left_right_steering_correction[camera]
+                x_shape = x.shape
+                print("image shape after cv2.imread = ", x_shape)
+            #    steering_angle = samples.steering.values[batch_sample] + left_right_steering_correction[camera]
                 steering_angle = float(batch_sample[STEERING_ANGLE]) + left_right_steering_correction[camera]
             #   steering_angle = batch_sample['steering'] + left_right_steering_correction[camera] #Subodth
 
                 print('we are now after reading steering_angle')
                 print(" value of steering angle: {}:".format(steering_angle))
 
-
-            #     steering_angle = float(batch_sample[3]) + left_right_steering_correction[camera]
-            #     x_shape = x.shape
-            #     print("image read of steering angle = ", x_shape)
-	        #     # Append to batch
+	        #   # Append to batch
                 x = np.append(x, [image], axis=0)
                 y = np.append(y, [steering_angle])
             # x_shape = x.shape
