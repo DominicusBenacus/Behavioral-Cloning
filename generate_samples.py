@@ -56,7 +56,7 @@ def generate_samples(data, augment=True, batch_size = 128):
             #   steering_angle = batch_sample['steering'] + left_right_steering_correction[camera] #Subodth
 
                 print('we are now after reading steering_angle')
-                print('we are now after reading steering_angle',steering_angle[0])
+                print(" value of steering angle: {}:".format(steering_angle[0]))
 
 
             #     steering_angle = float(batch_sample[3]) + left_right_steering_correction[camera]
