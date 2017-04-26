@@ -109,13 +109,16 @@ for time in range(numTimes):
     #print('number of training data:', len(y_valid))
     #print('samples_per_epoch:', X_train.shape)
     print(" samples_per_epoch: {}:".format(len(train_samples)))
+    samples_per_epoch = len(train_samples) - (len(train_samples) % batch_size)
+    prin('samples_per_epoch',samples_per_epoch)
+
     #print('nb_val_samples:', y_valid.shape)
     print('number of epochs:', num_epochs)
     print('I am before call of model.fit generator')
     # training pipeline with keras
     history = model.fit_generator(#generator_fernando(X_train),
             generate_samples(train_samples),
-            samples_per_epoch=train_samples.shape[0],
+            samples_per_epoch=train_samples[0],
             nb_epoch=num_epochs,
             validation_data=generate_samples(validation_samples, augment=False),
             #validation_data=generator_fernando(y_valid),
