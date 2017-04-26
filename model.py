@@ -26,8 +26,8 @@ print(" shape of the first row of samples after imread: {}:".format(samples[0]))
 
 # Split data into training and validation set
 train_samples, validation_samples = train_test_split(samples, test_size=0.2)
-print(" shape of the training_samples: {}:".format(train_samples.shape[0]))
-print(" shape of the validation_samples: {}:".format(validation_samples.shape[0]))
+print(" shape of the training_samples: {}:".format(train_samples[0]))
+print(" shape of the validation_samples: {}:".format(validation_samples[0]))
 
 
 # ================================================================================================================
