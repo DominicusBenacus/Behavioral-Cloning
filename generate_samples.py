@@ -12,7 +12,7 @@ left_right_steering_correction = [.25, 0., -.25]
 STEERING_ANGLE = 3
 
 
-def generate_samples(data, augment=True):
+def generate_samples(data, augment=True, batch_size = 128):
     """
     Keras generator yielding batches of training/validation data.
     Applies data augmentation pipeline if `augment` is True.
@@ -24,7 +24,6 @@ def generate_samples(data, augment=True):
     samples = data
     num_samples = len(data)
     #print('kind of indices', samples)
-    batch_size = 128
     while True:
         #Generate random batch of indices
         #indices = np.random.permutation(data.count()[0])
