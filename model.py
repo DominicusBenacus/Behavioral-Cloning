@@ -10,49 +10,25 @@ from generate_samples import generate_samples
 from generator_fernando import generator_fernando
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
-#import generate_samples
-#import resize_normalize
 import random
+
 # ================================================================================================================
 # Read in rough balanced data Set
 # ================================================================================================================
-local_project_path = '../'
-local_data_path = os.path.join(local_project_path, 'data')
-# load balanced data set
-#data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log_balanced.csv'))
-#data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log.csv'))
-lines = []
+samples = []
 with open('../data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
-    for line in reader:
-      lines.append(line)
-del(lines[0])
+    for sample in reader:
+      samples.append(sample)
+del(samples[0])
 
-print(" shape of the frist row of lines after imread: {}:".format(lines[0]))
-images =[]
-measurements = []
-for line in lines:
-    source_path = line[0]
-    filename= source_path.split('/')[-1]
-    current_path = '../data/IMG/' + filename
-    image = cv2.imread(current_path)
-    images.append(image)
-    
-    measurement = float(line[3])
-    measurements.append(measurement)
+print(" shape of the first row of samples after imread: {}:".format(samples[0]))
 
-
-X_train = np.array(images)
-print(" shape of X_train after readIn: {}:".format(X_train[0].shape))
-y_train = np.array(measurements)
-print(" shape of steering angle after readIn: {}:".format(y_train[0].shape))
-
-# delete the first row which has column names like 'left', 'steering' etc
-del(lines[0])
-
-X_train, y_valid = train_test_split(lines, test_size=0.2)
 # Split data into training and validation set
-#X_train, y_valid = model_selection.train_test_split(data_set, test_size=.2)
+train_samples, validation_samples = train_test_split(samples, test_size=0.2)
+print(" shape of the training_samples: {}:".format(train_samples.shape[0]))
+print(" shape of the validation_samples: {}:".format(validation_samples.shape[0]))
+
 
 # ================================================================================================================
 # Model Architectures
@@ -132,19 +108,19 @@ for time in range(numTimes):
     #print('number of training data: ', len(X_train))
     #print('number of training data:', len(y_valid))
     #print('samples_per_epoch:', X_train.shape)
-    print(" samples_per_epoch: {}:".format(X_train[0].shape))
+    print(" samples_per_epoch: {}:".format(train_samples.shape[0]))
 
     #print('nb_val_samples:', y_valid.shape)
     print('number of epochs:', num_epochs)
     print('I am before call of model.fit generator')
     # training pipeline with keras
     history = model.fit_generator(#generator_fernando(X_train),
-            generate_samples(X_train, local_data_path),
-            samples_per_epoch=X_train[0].shape,
+            generate_samples(train_samples, local_data_path),
+            samples_per_epoch=train_samples.shape[0],
             nb_epoch=num_epochs,
-            validation_data=generate_samples(y_valid, local_data_path, augment=False),
+            validation_data=generate_samples(validation_samples, local_data_path, augment=False),
             #validation_data=generator_fernando(y_valid),
-            nb_val_samples=y_valid[0].shape
+            nb_val_samples=validation_samples.shape[0]
             )
 
     print('Model fit generator finished')
