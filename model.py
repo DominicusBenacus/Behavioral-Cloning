@@ -102,6 +102,7 @@ numTimes = 1
 val_best = 999
 model = architecture()
 num_epochs= 15
+batch_size = 128
 
 for time in range(numTimes):
     
