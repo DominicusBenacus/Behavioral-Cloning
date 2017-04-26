@@ -28,7 +28,7 @@ with open('../data/driving_log.csv') as csvfile:
       lines.append(line)
 del(lines[0])
 
-print(" samples_per_epoch: {}:".format(lines[0].shape))
+print(" samples_per_epoch: {}:".format(lines))
 images =[]
 measurements = []
 for line in lines:
