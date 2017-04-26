@@ -44,9 +44,9 @@ def generate_samples(data, augment=True, batch_size = 128):
                 print("image shape after random selection of camera = ", x_shape)
                 # Read frame image and work out steering angle
                 image = cv2.imread(batch_sample[camera].strip())
-                print('we are now after imread')
-                image_shape = image.shape
-                print("image shape after cv2.imread = ", image_shape)
+                print('we are now after imread{}:'.format(image))
+                
+                
                 steering_angle = float(batch_sample[STEERING_ANGLE]) + left_right_steering_correction[camera]
 
                 print('we are now after reading steering_angle')
