@@ -12,7 +12,7 @@ left_right_steering_correction = [.25, 0., -.25]
 STEERING_ANGLE = 3
 
 
-def generate_samples(data, root_path, augment=True):
+def generate_samples(data, augment=True):
     """
     Keras generator yielding batches of training/validation data.
     Applies data augmentation pipeline if `augment` is True.

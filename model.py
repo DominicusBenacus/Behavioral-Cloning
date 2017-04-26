@@ -114,10 +114,10 @@ for time in range(numTimes):
     print('I am before call of model.fit generator')
     # training pipeline with keras
     history = model.fit_generator(#generator_fernando(X_train),
-            generate_samples(train_samples, local_data_path),
+            generate_samples(train_samples),
             samples_per_epoch=train_samples.shape[0],
             nb_epoch=num_epochs,
-            validation_data=generate_samples(validation_samples, local_data_path, augment=False),
+            validation_data=generate_samples(validation_samples, augment=False),
             #validation_data=generator_fernando(y_valid),
             nb_val_samples=validation_samples.shape[0]
             )
