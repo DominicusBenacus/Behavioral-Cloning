@@ -111,7 +111,7 @@ for time in range(numTimes):
     #print('samples_per_epoch:', X_train.shape)
     print(" samples_per_epoch: {}:".format(len(train_samples)))
     samples_per_epoch = len(train_samples) - (len(train_samples) % batch_size)
-    prin('samples_per_epoch',samples_per_epoch)
+    print('samples_per_epoch',samples_per_epoch)
 
     #print('nb_val_samples:', y_valid.shape)
     print('number of epochs:', num_epochs)
