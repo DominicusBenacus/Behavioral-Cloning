@@ -35,7 +35,7 @@ def generate_samples(data, augment=True, batch_size = 128):
             steering_angles = []
             #x = np.empty([0, 160, 320, 3], dtype=np.float32)
             #y = np.empty([0], dtype=np.float32)
-            
+
             # Read in and preprocess a batch of images
             for batch_sample in batch_samples:
                 # Randomly select camera
@@ -47,11 +47,11 @@ def generate_samples(data, augment=True, batch_size = 128):
                 print(" value of steering angle: {}:".format(steering_angle))
                 #x = np.append(x, [image], axis=0)
                 #y = np.append(y, [steering_angle])
-                images = np.append(image)
-                steering_angles = np.append(steering_angle)
+                images.append(image)
+                steering_angles.append(steering_angle)
             
-            x = np.array(image)
-            y = np.array(steering_angle)
+            x = np.array(images)
+            y = np.array(steering_angles)
             x_shape = x.shape
             print("Image data shape after vrate numpy array ", x_shape)
 
