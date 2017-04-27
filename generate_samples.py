@@ -52,7 +52,8 @@ def generate_samples(data, augment=True, batch_size = 128):
             
             x = np.array(images)
             y = np.array(steering_angles)
-            print("Image data shape after vrate numpy array ", x[0].shape)
+            print(" sImage data shape after create numpy array: {}:".format(x[0]))
+
 
             # Randomly flip half of images in the batch
             flip_indices = random.sample(range(x.shape[0]), int(x.shape[0] / 2))
