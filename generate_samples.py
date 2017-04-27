@@ -31,8 +31,8 @@ def generate_samples(data, augment=True, batch_size = 128):
             batch_samples = samples[batch:(batch + batch_size)]
             # Output arrays
             
-            images[]
-            steering_angles[]
+            images = []
+            steering_angles = []
             #x = np.empty([0, 160, 320, 3], dtype=np.float32)
             x_shape = x.shape
             print("image shape after creation of np.empty array = ", x_shape)
