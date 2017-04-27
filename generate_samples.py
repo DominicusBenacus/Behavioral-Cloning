@@ -34,9 +34,8 @@ def generate_samples(data, augment=True, batch_size = 128):
             images = []
             steering_angles = []
             #x = np.empty([0, 160, 320, 3], dtype=np.float32)
-            x_shape = x.shape
-            print("image shape after creation of np.empty array = ", x_shape)
             #y = np.empty([0], dtype=np.float32)
+            
             # Read in and preprocess a batch of images
             for batch_sample in batch_samples:
                 # Randomly select camera
