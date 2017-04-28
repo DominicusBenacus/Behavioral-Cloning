@@ -12,7 +12,7 @@ left_right_steering_correction = [.25, 0., -.25]
 STEERING_ANGLE = 3
 
 
-def generate_samples(data, augment=True, batch_size = 128):
+def generate_samples(data,rootPath, augment=True, batch_size = 128):
     """
     Keras generator yielding batches of training/validation data.
     Applies data augmentation pipeline if `augment` is True.
@@ -42,7 +42,9 @@ def generate_samples(data, augment=True, batch_size = 128):
                 camera = np.random.randint(len(cameras)) if augment else 1
                 print('shape af choosen camera', camera)
                 # Read frame image and work out steering angle
-                image = cv2.imread(batch_sample[camera].strip())
+                image = cv2.imread(os.path.join(rootPath, data[cameras[camera]].values[batch_sample].strip()))
+                print("Shape of read image", image.shape)
+                #image = cv2.imread(batch_sample[camera].strip())
                 steering_angle = float(batch_sample[STEERING_ANGLE]) + left_right_steering_correction[camera]
                                 
                 #x = np.append(x, [image], axis=0)
@@ -52,7 +54,7 @@ def generate_samples(data, augment=True, batch_size = 128):
             
             x = np.array(images)
             y = np.array(steering_angles)
-            print(" sImage data shape after create numpy array: {}:".format(x.shape))
+            print(" Image data shape after create numpy array: {}:".format(x.shape))
             
 
 

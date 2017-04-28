@@ -29,6 +29,9 @@ train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 print(" shape of the training_samples: {}:".format(train_samples[0]))
 print(" shape of the validation_samples: {}:".format(validation_samples[0]))
 
+local_project_path = '/'
+local_data_path = os.path.join(local_project_path, 'data')
+
 
 # ================================================================================================================
 # Model Architectures
@@ -119,10 +122,10 @@ for time in range(numTimes):
     print('I am before call of model.fit generator')
     # training pipeline with keras
     history = model.fit_generator(#generator_fernando(X_train),
-            generate_samples(train_samples),
+            generate_samples(train_samples,local_data_path),
             samples_per_epoch=samples_per_epoch,
             nb_epoch=num_epochs,
-            validation_data=generate_samples(validation_samples, augment=False),
+            validation_data=generate_samples(validation_samples,local_data_path, augment=False),
             #validation_data=generator_fernando(y_valid),
             nb_val_samples=nb_val_samples
             )
