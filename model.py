@@ -29,7 +29,7 @@ train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 print(" shape of the training_samples: {}:".format(train_samples[0]))
 print(" shape of the validation_samples: {}:".format(validation_samples[0]))
 
-local_project_path = '/'
+local_project_path = '../'
 local_data_path = os.path.join(local_project_path, 'data')
 
 
