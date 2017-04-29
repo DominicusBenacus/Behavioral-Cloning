@@ -11,6 +11,10 @@ from generator_fernando import generator_fernando
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 import random
+from keras import backend as K
+
+
+
 
 # ================================================================================================================
 # Read in rough balanced data Set
@@ -152,7 +156,7 @@ for time in range(numTimes):
 
         print('Time: ', time + 1)
 
-import gc; gc.collect()
-print ('===========================================================')
-print ('traing session has finished')
-print ('===========================================================')
+K.clear_session()
+print('===========================================================')
+print('traing session has finished')
+print('===========================================================')
