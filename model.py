@@ -148,6 +148,9 @@ if val_loss < val_best:
     val_best = val_loss
     save_model("model")
     print('Time: ', time + 1)
+
+import gc
+gc.collect()
 K.clear_session()
 print('===========================================================')
 print('traing session has finished')
