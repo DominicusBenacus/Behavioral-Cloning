@@ -5,22 +5,20 @@ import os
 import pandas as pd
 
 print('start of balancing')
-local_project_path = '../'
-local_data_path = os.path.join(local_project_path, 'data')
-# Read the data
-data_set = pd.io.parsers.read_csv(os.path.join(local_data_path, 'driving_log.csv'))
-#balance data and save it to a neew csv fil
-balanced = pd.DataFrame() 	# Balanced dataset
-bins = 1000 				# N of bins
-bin_n = 200 				# N of examples to include in each bin (at most)
+#                                                cam,    cam,  cam 
+# read in the recoded data set froma csv fromat [center, left, right, steering, throttle, brake, speed]
+samples = []
+with open('../data/driving_log.csv') as csvfile:
+    reader = csv.reader(csvfile)
+    for sample in reader:
+      samples.append(sample)
+del(samples[0])
 
-start = 0
-print('start of for loop')
-for end in np.linspace(0, 1, num=bins):  
-    data_set_range = data_set[(np.absolute(data_set[3]) >= start) & (np.absolute(data_set[3]) < end)]
-    range_n = min(bin_n, data_set_range.shape[0])
-    balanced = pd.concat([balanced, data_set_range.sample(range_n)])
-    start = end
+print(" shape of the first row of samples after imread: {}:".format(samples[0]))
+
+#balance data and save it to a neew csv fil
+
+
 print('end of balancing')    
 balanced.to_csv('data/driving_log_balanced.csv', index=False)
 print('balanced data set saved to data/driving_log_balanced.csv')    
