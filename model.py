@@ -106,7 +106,7 @@ def save_model(name):
 numTimes = 1
 val_best = 999
 model = architecture()
-num_epochs= 15
+num_epochs= 3
 batch_size = 128
 
 
