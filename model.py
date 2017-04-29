@@ -85,6 +85,7 @@ def architecture():
     
     model.compile(optimizer='adam', loss='mse')
     print('I am finished build the model')
+    print(model.summary())
     return model
 
 # Save Model
