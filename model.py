@@ -152,6 +152,7 @@ for time in range(numTimes):
 
         print('Time: ', time + 1)
 
+import gc; gc.collect()
 print ('===========================================================')
 print ('traing session has finished')
 print ('===========================================================')
