@@ -20,7 +20,7 @@ def generate_samples(samples, augment=True, batch_size = 128):
     - make random brightnes adaption  
     """
     num_samples = len(samples)
-    batch_size = batch_size/3
+    batch_size = int(batch_size/3)
     #print('kind of indices', samples)
     while True:
         #Generate random batch of indices
