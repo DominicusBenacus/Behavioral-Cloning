@@ -39,9 +39,9 @@ def generate_samples(samples, augment=True, batch_size = 128):
                      image = cv2.imread(current_path)
                      images.append(image)
                      #read steering angle depending an add offset depending on the camera possition
-                     steering_angle = batch_sample[STEERING_ANGLE]
+                     steering_angle = float(batch_sample[STEERING_ANGLE])
                      print('type of steering_angle', steering_angle)
-                     steering_angle = steering_angle + float(left_right_steering_correction[i])
+                     steering_angle = float(steering_angle) + float(left_right_steering_correction[i])
                      steering_angles.append(steering_angle)
             # create a numpy array because keras expect a numpy array as input    
             x = np.array(images)
