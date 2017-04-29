@@ -40,13 +40,14 @@ def generate_samples(samples, augment=True, batch_size = 128):
                      images.append(image)
                      #read steering angle depending an add offset depending on the camera possition
                      steering_angle = float(batch_sample[STEERING_ANGLE])
-                     print('type of steering_angle', steering_angle)
                      steering_angle = float(steering_angle) + float(left_right_steering_correction[i])
                      steering_angles.append(steering_angle)
+            print('value of steering_angle', steering_angle)
             # create a numpy array because keras expect a numpy array as input    
             x = np.array(images)
             y = np.array(steering_angles)
             print(" Image data shape after create numpy array: {}:".format(x.shape))
+            print(" Image data shape after create numpy array: {}:".format(y.shape))
             
             # # Randomly flip half of images in the batch
             # flip_indices = random.sample(range(x.shape[0]), int(x.shape[0] / 2))
