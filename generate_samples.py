@@ -44,7 +44,7 @@ def generate_samples(samples, augment=True, batch_size = 128):
                      steering_angle = float(steering_angle) + float(left_right_steering_correction[i])
                      print(" Shape of steering angle after add or sub wor out: {}:".format(steering_angle))
                      steering_angles.append(steering_angle)
-                     print(" Shape of steering angle after append: {}:".format(steering_angles.shape))
+                     print(" Shape of steering angle after append: {}:".format(steering_angles))
             # create a numpy array because keras expect a numpy array as input    
             x = np.array(images)
             y = np.array(steering_angles)
