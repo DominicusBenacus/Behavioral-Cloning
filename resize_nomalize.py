@@ -15,6 +15,6 @@ def resize_normalize(image):
     #image = cv2.resize(image, (66, 200)) #first try
     resized = ktf.image.resize_images(image, (66, 200))
     #normalize
-    image = image/255.0 - 0.5
+    resized = resized/255.0 - 0.5
 
-    return image
+    return resized
