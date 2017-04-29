@@ -108,54 +108,46 @@ model = architecture()
 num_epochs= 15
 batch_size = 128
 
-for time in range(numTimes):
-    
-    #define the input data for the model.fit.generator
-    print(" number of training samples: {}:".format(len(train_samples)))
-    samples_per_epoch = len(train_samples) - (len(train_samples) % batch_size)
-    print('samples_per_epoch',samples_per_epoch)
 
-    print(" number of validation samples: {}:".format(len(validation_samples)))
-    nb_val_samples=len(validation_samples) - (len(validation_samples) % batch_size)
-    print('nb_val_epoch',nb_val_samples)
-
-    print('number of epochs:', num_epochs)
-    print('I am before call of model.fit generator')
-    # training pipeline with keras
-    history = model.fit_generator(#generator_fernando(X_train),
-            generate_samples(train_samples),
-            samples_per_epoch=samples_per_epoch,
-            nb_epoch=num_epochs,
-            validation_data=generate_samples(validation_samples, augment=False),
-            #validation_data=generator_fernando(y_valid),
-            nb_val_samples=nb_val_samples
-            )
-
-    print('Model fit generator finished')
-    print(history.history.keys())
-    # ================================================================================================================
-    # Evaluation of the trainig results
-    # ================================================================================================================
-    import matplotlib.pyplot as plt
-    import matplotlib.image as mpimg
-    ## plot the training and validation loss for each epoch
-    print('I am ready to plot the evaluation')
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
-    plt.title('model mean squared error loss')
-    plt.ylabel('mean squared error loss')
-    plt.xlabel('epoch')
-    plt.legend(['training set', 'validation set'], loc='upper right')
-    plt.show()
-
-    val_loss = history.history['val_loss'][0]
-    if val_loss < val_best:
-        val_best = val_loss
-
-        save_model("model")
-
-        print('Time: ', time + 1)
-
+#define the input data for the model.fit.generator
+print(" number of training samples: {}:".format(len(train_samples)))
+samples_per_epoch = len(train_samples) - (len(train_samples) % batch_size)
+print('samples_per_epoch',samples_per_epoch)
+print(" number of validation samples: {}:".format(len(validation_samples)))
+nb_val_samples=len(validation_samples) - (len(validation_samples) % batch_size)
+print('nb_val_epoch',nb_val_samples)
+print('number of epochs:', num_epochs)
+print('I am before call of model.fit generator')
+# training pipeline with keras
+history = model.fit_generator(#generator_fernando(X_train),
+        generate_samples(train_samples),
+        samples_per_epoch=samples_per_epoch,
+        nb_epoch=num_epochs,
+        validation_data=generate_samples(validation_samples, augment=False),
+        #validation_data=generator_fernando(y_valid),
+        nb_val_samples=nb_val_samples
+        )
+print('Model fit generator finished')
+print(history.history.keys())
+# ================================================================================================================
+# Evaluation of the trainig results
+# ================================================================================================================
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+## plot the training and validation loss for each epoch
+print('I am ready to plot the evaluation')
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model mean squared error loss')
+plt.ylabel('mean squared error loss')
+plt.xlabel('epoch')
+plt.legend(['training set', 'validation set'], loc='upper right')
+plt.show()
+val_loss = history.history['val_loss'][0]
+if val_loss < val_best:
+    val_best = val_loss
+    save_model("model")
+    print('Time: ', time + 1)
 K.clear_session()
 print('===========================================================')
 print('traing session has finished')
