@@ -16,6 +16,9 @@ del(samples[0])
 
 print(" shape of the first row of samples after imread: {}:".format(samples[0]))
 
+for line in range(len(samples)):
+    
+
 #balance data and save it to a neew csv fil
 
 

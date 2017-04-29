@@ -54,12 +54,12 @@ def generate_samples(samples, augment=True, batch_size = 128):
             print(" Shape of steering angle: {}:".format(y.shape))
             
             # # Randomly flip half of images in the batch
-            # flip_indices = random.sample(range(x.shape[0]), int(x.shape[0] / 2))
-            # x[flip_indices] = np.fliplr(x[flip_indices])
+            flip_indices = random.sample(range(x.shape[0]), int(x.shape[0] / 2))
+            x[flip_indices] = np.fliplr(x[flip_indices])
             # #x[flip_indices] = cv2.flip(x[flip_indices],1)
-            # y[flip_indices] = -y[flip_indices]
+            y[flip_indices] = -y[flip_indices]
             # #x[flip_indices] = x[flip_indices, :, ::-1, :]
             # #y[flip_indices] = -y[flip_indices]
-            # x_shape = x.shape
-            # print("Image data shape after flipping images vertical =", x_shape)
+            x_shape = x.shape
+            print("Image data shape after flipping images vertical =", x_shape)
             yield (x, y)
