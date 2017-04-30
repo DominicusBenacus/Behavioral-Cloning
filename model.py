@@ -118,7 +118,7 @@ def save_model(name):
 numTimes = 1
 val_best = 999
 model = architecture()
-num_epochs= 3
+num_epochs= 8
 batch_size = 128
 
 
@@ -146,7 +146,7 @@ val_loss = history.history['val_loss'][0]
 if val_loss < val_best:
     val_best = val_loss
     save_model("model")
-    
+
 print('Model fit generator finished')
 print(history.history.keys())
 # ================================================================================================================
