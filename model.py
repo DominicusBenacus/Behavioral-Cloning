@@ -32,8 +32,8 @@ print(" shape of the validation_samples: {}:".format(validation_samples[0]))
 
 
 def resize_normalize(image):
-    #import tensorflow as tf
-    from keras.backend import tf as ktf
+    import tensorflow as tf
+    #from keras.backend import tf as ktf
 
     """
     Applies preprocessing pipeline to an image: crops `top` and `bottom`
@@ -41,7 +41,7 @@ def resize_normalize(image):
     """
     # resize
     #image = cv2.resize(image, (66, 200)) #first try
-    resized = ktf.image.resize_images(image, (66, 200))
+    resized = tf.image.resize_images(image, (66, 200))
     #normalize
     resized = resized/255.0 - 0.5
 
