@@ -34,6 +34,20 @@ train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 print(" shape of the training_samples: {}:".format(train_samples[0]))
 print(" shape of the validation_samples: {}:".format(validation_samples[0]))
 
+
+from keras.backend import tf as ktf
+def resize_normalize(image):
+    """
+    Applies preprocessing pipeline to an image: crops `top` and `bottom`
+    portions of image, resizes to 66*200 px and scales pixel values to [0, 1].
+    """
+    # resize
+    #image = cv2.resize(image, (66, 200)) #first try
+    resized = ktf.image.resize_images(image, (66, 200))
+    #normalize
+    resized = resized/255.0 - 0.5
+
+    return resized
 # ================================================================================================================
 # Model Architectures
 # The Nvidia architecture like described im here https://arxiv.org/pdf/1604.07316.pdf
@@ -159,21 +173,7 @@ K.clear_session()
 
 
 
-from keras.backend import tf as ktf
 
-
-def resize_normalize(image):
-    """
-    Applies preprocessing pipeline to an image: crops `top` and `bottom`
-    portions of image, resizes to 66*200 px and scales pixel values to [0, 1].
-    """
-    # resize
-    #image = cv2.resize(image, (66, 200)) #first try
-    resized = ktf.image.resize_images(image, (66, 200))
-    #normalize
-    resized = resized/255.0 - 0.5
-
-    return resized
 
 print('===========================================================')
 print('traing session has finished')
