@@ -4,7 +4,7 @@ import random
 import cv2
 import os
 from random import shuffle
-from sklearn.utils import shuffle
+import sklearn 
 
 
 # set up some parameter for dealing with the different camera positions
