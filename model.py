@@ -137,6 +137,7 @@ print(history.history.keys())
 # ================================================================================================================
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+plt.show(block=True)
 ## plot the training and validation loss for each epoch
 print('I am ready to plot the evaluation')
 plt.plot(history.history['loss'])
