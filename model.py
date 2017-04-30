@@ -31,9 +31,8 @@ print(" shape of the training_samples: {}:".format(train_samples[0]))
 print(" shape of the validation_samples: {}:".format(validation_samples[0]))
 
 
-from keras.backend import tf as ktf
 def resize_normalize(image):
-    import tensorflow as tf
+    #import tensorflow as tf
     from keras.backend import tf as ktf
 
     """
