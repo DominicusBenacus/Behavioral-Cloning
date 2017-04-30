@@ -7,12 +7,14 @@ import pandas as pd
 print('start of balancing')
 #                                                cam,    cam,  cam 
 # read in the recoded data set froma csv fromat [center, left, right, steering, throttle, brake, speed]
-samples = []
-with open('../data/driving_log.csv') as csvfile:
-    reader = csv.reader(csvfile)
-    for sample in reader:
-      samples.append(sample)
-del(samples[0])
+with open("../data/driving_log.csv", "rb") as infile, open("../data/driving_log_balanced.csv", "wb") as outfile:
+   reader = csv.reader(infile)
+   next(reader, None)  # skip the headers
+   writer = csv.writer(outfile)
+   for row in reader:       
+        measurement = float(row[3])
+       # process each row
+       writer.writerow(row)
 
 print(" shape of the first row of samples after imread: {}:".format(samples[0]))
 

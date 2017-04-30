@@ -1,0 +1,14 @@
+#improvements of genrator after achieve a working code
+
+wor out the samples with steering angle zero after csv inread:
+liek this:
+
+
+
+
+# randomize brightness
+                center_image = cv2.cvtColor(center_image, cv2.COLOR_BGR2RGB)
+                center_image = cv2.cvtColor(center_image, cv2.COLOR_RGB2HSV)
+                random_brightness = .1 + np.random.uniform()
+                center_image[:,:,2] = center_image[:,:,2] * random_brightness
+                center_image = cv2.cvtColor(center_image, cv2.COLOR_HSV2RGB)
