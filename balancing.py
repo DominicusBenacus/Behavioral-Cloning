@@ -5,7 +5,7 @@ print('start of balancing')
 # read in the recoded data set froma csv fromat [center, left, right, steering, throttle, brake, speed]
 with open("../data/driving_log.csv", "rb") as infile, open("../data/driving_log_balanced.csv", "wb") as outfile:
     reader = csv.reader(infile)
-    next(reader, None)  # skip the headers
+    #next(reader, None)  # skip the headers
     writer = csv.writer(outfile)
     for row in reader:
         steering_angle = float(row[3])
