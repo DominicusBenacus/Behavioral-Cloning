@@ -12,10 +12,6 @@ from sklearn.model_selection import train_test_split
 import tensorflow as tf
 import random
 from keras import backend as K
-
-
-
-
 # ================================================================================================================
 # Read in rough balanced data Set
 # ================================================================================================================
@@ -37,6 +33,9 @@ print(" shape of the validation_samples: {}:".format(validation_samples[0]))
 
 from keras.backend import tf as ktf
 def resize_normalize(image):
+    import tensorflow as tf
+    from keras.backend import tf as ktf
+
     """
     Applies preprocessing pipeline to an image: crops `top` and `bottom`
     portions of image, resizes to 66*200 px and scales pixel values to [0, 1].
