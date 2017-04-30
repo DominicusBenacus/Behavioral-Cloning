@@ -141,7 +141,12 @@ history = model.fit_generator(#generator_fernando(X_train),
         nb_val_samples=nb_val_samples
         )
 
-save_model("model")
+#conditioned save mdoel routine
+val_loss = history.history['val_loss'][0]
+if val_loss < val_best:
+    val_best = val_loss
+    save_model("model")
+    
 print('Model fit generator finished')
 print(history.history.keys())
 # ================================================================================================================
@@ -159,10 +164,7 @@ plt.ylabel('mean squared error loss')
 plt.xlabel('epoch')
 plt.legend(['training set', 'validation set'], loc='upper right')
 plt.show(block=True)
-val_loss = history.history['val_loss'][0]
-if val_loss < val_best:
-    val_best = val_loss
-    save_model("model")
+
     
 
 import gc
