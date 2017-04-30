@@ -30,22 +30,6 @@ train_samples, validation_samples = train_test_split(samples, test_size=0.2)
 print(" shape of the training_samples: {}:".format(train_samples[0]))
 print(" shape of the validation_samples: {}:".format(validation_samples[0]))
 
-
-def resize_normalize(image):
-    import tensorflow as tf
-    #from keras.backend import tf as ktf
-
-    """
-    Applies preprocessing pipeline to an image: crops `top` and `bottom`
-    portions of image, resizes to 66*200 px and scales pixel values to [0, 1].
-    """
-    # resize
-    #image = cv2.resize(image, (66, 200)) #first try
-    resized = tf.image.resize_images(image, (66, 200))
-    #normalize
-    resized = resized/255.0 - 0.5
-
-    return resized
 # ================================================================================================================
 # Model Architectures
 # The Nvidia architecture like described im here https://arxiv.org/pdf/1604.07316.pdf
@@ -60,6 +44,21 @@ from keras import models, optimizers, backend
 print('I am before call of architecture')
 
 def architecture():
+    def resize_normalize(image):
+        import cv2
+        from keras.backend import tf as ktf    
+        """
+        Applies preprocessing pipeline to an image: crops `top` and `bottom`
+        portions of image, resizes to 66*200 px and scales pixel values to [0, 1].
+        """
+        # resize
+        #image = cv2.resize(image, (66, 200)) #first try
+        resized = ktf.image.resize_images(image, (66, 200))
+        #normalize
+        resized = resized/255.0 - 0.5
+    
+        return resized
+
     print('I am inside call of architecture')
     #initialize model
     model = Sequential()
@@ -75,7 +74,8 @@ def architecture():
     model.add(Cropping2D(cropping=((60,20), (1,1)), input_shape=(160,320,3)))
 
     print('I am before call of Lambda')
-    model.add(Lambda(lambda x: resize_normalize(x), input_shape=(80,318,3), output_shape=(66, 200, 3)))
+    model.add(Lambda(resize_normalize, input_shape=(160, 320, 3), output_shape=(66, 200, 3)))
+    #model.add(Lambda(lambda x: resize_normalize(x), input_shape=(80,318,3), output_shape=(66, 200, 3)))
     model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))
     model.add(Convolution2D(36, 5, 5, name='conv2', subsample=(2, 2), activation=nonlinear))
     model.add(Convolution2D(48, 5, 5, name='conv3', subsample=(2, 2), activation=nonlinear))
