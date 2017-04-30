@@ -41,12 +41,12 @@ def generate_samples(samples, augment=True, batch_size=128):
                     current_path = '../data/IMG/' + filename
                     image = cv2.imread(current_path)
 
-                    # randomize brightness
-                    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-                    image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
-                    random_brightness = .1 + np.random.uniform()
-                    image[:, :, 2] = image[:, :, 2] * random_brightness
-                    image = cv2.cvtColor(image, cv2.COLOR_HSV2RGB)
+                    # # randomize brightness
+                    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    # image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+                    # random_brightness = .1 + np.random.uniform()
+                    # image[:, :, 2] = image[:, :, 2] * random_brightness
+                    # image = cv2.cvtColor(image, cv2.COLOR_HSV2RGB)
 
                     images.append(image)
                     # read steering angle depending an add offset depending on
