@@ -137,7 +137,7 @@ print(history.history.keys())
 # ================================================================================================================
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-plt.show(block=True)
+
 ## plot the training and validation loss for each epoch
 print('I am ready to plot the evaluation')
 plt.plot(history.history['loss'])
@@ -146,7 +146,7 @@ plt.title('model mean squared error loss')
 plt.ylabel('mean squared error loss')
 plt.xlabel('epoch')
 plt.legend(['training set', 'validation set'], loc='upper right')
-plt.show()
+plt.show(block=True)
 val_loss = history.history['val_loss'][0]
 if val_loss < val_best:
     val_best = val_loss
