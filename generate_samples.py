@@ -21,7 +21,7 @@ def generate_samples(samples, augment=True, batch_size=128):
     - flipping images verticaly
     - make random brightnes adaption  
     """
-    samples = shuffle(samples)
+    #samples = shuffle(samples)
     num_samples = len(samples)
     batch_size = int(batch_size / 3)
     #print('kind of indices', samples)
