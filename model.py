@@ -5,7 +5,7 @@ import numpy as np
 import os
 import pandas as pd
 from sklearn import model_selection
-from resize_nomalize import resize_normalize
+#from resize_nomalize import resize_normalize
 from generate_samples import generate_samples
 from generator_fernando import generator_fernando
 from sklearn.model_selection import train_test_split
@@ -156,6 +156,25 @@ if val_loss < val_best:
 import gc
 gc.collect()
 K.clear_session()
+
+
+
+from keras.backend import tf as ktf
+
+
+def resize_normalize(image):
+    """
+    Applies preprocessing pipeline to an image: crops `top` and `bottom`
+    portions of image, resizes to 66*200 px and scales pixel values to [0, 1].
+    """
+    # resize
+    #image = cv2.resize(image, (66, 200)) #first try
+    resized = ktf.image.resize_images(image, (66, 200))
+    #normalize
+    resized = resized/255.0 - 0.5
+
+    return resized
+
 print('===========================================================')
 print('traing session has finished')
 print('===========================================================')
