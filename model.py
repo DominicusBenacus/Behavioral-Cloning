@@ -16,7 +16,7 @@ from keras import backend as K
 # Read in rough balanced data Set
 # ================================================================================================================
 samples = []
-with open('../data/driving_log.csv') as csvfile:
+with open('../data/driving_log_balanced.csv') as csvfile:
     reader = csv.reader(csvfile)
     for sample in reader:
       samples.append(sample)
@@ -56,7 +56,7 @@ def architecture():
         resized = ktf.image.resize_images(image, (66, 200))
         #normalize
         resized = resized/255.0 - 0.5
-    
+
         return resized
 
     print('I am inside call of architecture')
