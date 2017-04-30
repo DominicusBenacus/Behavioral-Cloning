@@ -4,6 +4,8 @@ import random
 import cv2
 import os
 from random import shuffle
+from sklearn.utils import shuffle
+
 
 # set up some parameter for dealing with the different camera positions
 left_right_steering_correction = [0, .25, -.25]
@@ -70,8 +72,7 @@ def generate_samples(samples, augment=True, batch_size=128):
             x[flip_indices] = np.fliplr(x[flip_indices])
             # #x[flip_indices] = cv2.flip(x[flip_indices],1)
             y[flip_indices] = -y[flip_indices]
-            # #x[flip_indices] = x[flip_indices, :, ::-1, :]
-            # #y[flip_indices] = -y[flip_indices]
+            
             x_shape = x.shape
             print("Image data shape after flipping images vertical =", x_shape)
-            yield (x, y)
+            yield sklearn.utils.shuffle(x, y)
