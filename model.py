@@ -95,6 +95,7 @@ def architecture():
     model.add(Dropout(dropout))
     model.add(Dense(1, name='output', activation=nonlinear))    
     
+    #model.compile(optimizer=optimizers.Adam(lr=1e-04), loss='mean_squared_error')
     model.compile(optimizer='adam', loss='mse')
     print('I am finished build the model')
     print(model.summary())
@@ -117,6 +118,8 @@ def save_model(name):
 # ================================================================================================================
 numTimes = 1
 val_best = 999
+# preload the weights if u train the model after append more traing data makes training faster.
+#model = load_model('model.h5')
 model = architecture()
 num_epochs= 8
 batch_size = 128
