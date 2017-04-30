@@ -118,7 +118,7 @@ def save_model(name):
 # ================================================================================================================
 numTimes = 1
 val_best = 999
-# preload the weights if u train the model after append more traing data makes training faster.
+# preload e weights if u train the model after append more traing data makes training faster.
 #model = load_model('model.h5')
 model = architecture()
 num_epochs= 8
