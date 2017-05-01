@@ -123,6 +123,8 @@ numTimes = 1
 val_best = 999
 # preload e weights if u train the model after append more traing data makes training faster.
 model = load_model('model.h5')
+print(model.summary())
+
 #model = architecture()
 num_epochs= 10
 batch_size = 128

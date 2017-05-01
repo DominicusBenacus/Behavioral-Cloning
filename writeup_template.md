@@ -16,15 +16,7 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
-[//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -34,17 +26,22 @@ The goals / steps of this project are the following:
 
 ####1. Submission includes all required files and can be used to run the simulator in autonomous mode
 
-My project includes the following files:
+My project includes the following necessary files. There are more files but not every file is needed for training:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
-* model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
+* model.h5 containing a trained convolution neural network
+* generate_samples.py contains the augmentation steps. All camera with steering angle offset correction, flipping half of      each batch and randamise the brightness of eacht image
+* resize_normalize.py to preprocess the sample data. Function is called during training using a Lambda layer
+* writeup_report.md
+* balancing.py
 
 ####2. Submission includes functional code
-Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
-```sh
-python drive.py model.h5
-```
+Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by:
+
+First: Start the simulator in autonomously mode.
+Second:
+Start the anaconda shell (in the repo directory) and activate the carnd-term1 starter kit environment
+Third: Type in the shell --> python drive.py model.h5
 
 ####3. Submission code is usable and readable
 
@@ -127,3 +124,13 @@ After the collection process, I had X number of data points. I then preprocessed
 I finally randomly shuffled the data set and put Y% of the data into a validation set. 
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+
+[//]: # (Image References)
+
+[image1]: ./examples/placeholder.png "Model Visualization"
+[image2]: ./examples/placeholder.png "Grayscaling"
+[image3]: ./examples/placeholder_small.png "Recovery Image"
+[image4]: ./examples/placeholder_small.png "Recovery Image"
+[image5]: ./examples/placeholder_small.png "Recovery Image"
+[image6]: ./examples/placeholder_small.png "Normal Image"
+[image7]: ./examples/placeholder_small.png "Flipped Image"
