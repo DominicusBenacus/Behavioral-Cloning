@@ -39,14 +39,10 @@ def generate_samples(samples, augment=True, batch_size=128):
             for batch_sample in batch_samples:
                 for i in range(0, 3):
                     source_path = batch_sample[i]
-                    print('this is the format of source_path',source_path)
-                    #filename = os.path.split(source_path)
                     #source_path = source_path.split('/')[-1]
                     filename = source_path.split('\\')[-1]
-                    print('this is the format of filename',filename)
                     #current_path = os.path.join('../data/IMG/',filename)
                     current_path = '../data/IMG/' + filename
-                    print('this is the format of current path',current_path)
                     image = cv2.imread(current_path)
 
                     # # randomize brightness
@@ -64,6 +60,12 @@ def generate_samples(samples, augment=True, batch_size=128):
                     steering_angle = float(steering_angle) + float(left_right_steering_correction[i])
                     #print(" Shape of steering angle after add or sub wor out: {}:".format(steering_angle))
                     steering_angles.append(steering_angle)
+            
+            
+            print('this is the format of current path',current_path)
+            print('this is the format of filename',filename)
+            print('this is the format of source_path',source_path)
+
 
             #print(" Shape of steering angle after append: {}:".format(steering_angles))
             # create a numpy array because keras expect a numpy array as input
