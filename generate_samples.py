@@ -40,11 +40,12 @@ def generate_samples(samples, augment=True, batch_size=128):
                 for i in range(0, 3):
                     source_path = batch_sample[i]
                     print('this is the format of source_path',source_path)
-                    filename = os.path.split(source_path)
+                    #filename = os.path.split(source_path)
+                    #source_path = source_path.split('/')[-1]
+                    filename = source_path.split('\\')[-1]
                     print('this is the format of filename',filename)
-                    #filename = source_path.split('\\')[-1]
-                    current_path = os.path.join('../data/IMG/',filename)
-                    #current_path = '../data/IMG/' + filename
+                    #current_path = os.path.join('../data/IMG/',filename)
+                    current_path = '../data/IMG/' + filename
                     print('this is the format of current path',current_path)
                     image = cv2.imread(current_path)
 
