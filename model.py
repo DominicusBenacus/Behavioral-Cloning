@@ -16,7 +16,7 @@ from keras import backend as K
 # Read in rough balanced data Set
 # ================================================================================================================
 samples = []
-with open('../data/driving_log_balanced.csv') as csvfile:
+with open('../data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
     for sample in reader:
       samples.append(sample)
@@ -119,9 +119,9 @@ def save_model(name):
 numTimes = 1
 val_best = 999
 # preload e weights if u train the model after append more traing data makes training faster.
-#model = load_model('model.h5')
-model = architecture()
-num_epochs= 8
+model = load_model('model.h5')
+#model = architecture()
+num_epochs= 15
 batch_size = 128
 
 

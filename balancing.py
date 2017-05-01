@@ -9,8 +9,8 @@ with open("driving_log.csv", "rb") as infile, open("driving_log_balanced.csv", "
     writer = csv.writer(outfile)
     for row in reader:
         steering_angle = abs(float(row[3]))
-        print('steering value = ',steering_angle)
-        if steering_angle >= 0.05:
+        #print('steering value = ',steering_angle)
+        if steering_angle >= 0.001:
             writer.writerow(row)
 
 #balance data and save it to a neew csv fil
