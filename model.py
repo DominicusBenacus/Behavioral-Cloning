@@ -18,11 +18,12 @@ from keras import backend as K
 # ================================================================================================================
 samples = []
 with open('../data/driving_log.csv') as csvfile:
-    reader = csv.reader(csvfile)
-    for sample in reader:
-      samples.append(sample)
-del(samples[0])
+    reader = csv.reader(csvfile) # create a reader object to with
+    for sample in reader:        # got through all lines of the csv File
+      samples.append(sample)     # append every line to the list samples[]   
+del(samples[0])                  # delete the header of the csv file
 
+# print out the shape of the first line of list samples[]
 print(" shape of the first row of samples after imread: {}:".format(samples[0]))
 
 # Split data into training and validation set
@@ -45,8 +46,9 @@ from keras import models, optimizers, backend
 from keras.models import load_model
 
 print('I am before call of architecture')
-
 def architecture():
+    # put the normalization fucntion inside the model ensure preprocess using Lambda layer
+    # There were many issue depending on using the lambda layer and in this waa it works
     def resize_normalize(image):
         import cv2
         from keras.backend import tf as ktf    
@@ -54,10 +56,11 @@ def architecture():
         Applies preprocessing pipeline to an image: crops `top` and `bottom`
         portions of image, resizes to 66*200 px and scales pixel values to [0, 1].
         """
-        # resize
-        #image = cv2.resize(image, (66, 200)) #first try
+        # resize to width 200 and high 66 liek recommended
+        # in the nvidia paper for the used CNN
+        # image = cv2.resize(image, (66, 200)) #first try
         resized = ktf.image.resize_images(image, (66, 200))
-        #normalize
+        #normalize 0-1
         resized = resized/255.0 - 0.5
 
         return resized
@@ -67,15 +70,9 @@ def architecture():
     model = Sequential()
     dropout = 0.5
     nonlinear = 'tanh'
-    #shifting = True
-    ### Randomly shift up and down while preprocessing
-    #shift_delta = 8 if shifting else 0
     print('I am before call of cropping layer')
     ### Convolution layers and parameters were taken from the "nvidia paper" on end-to-end autonomous steering.
-    #model.add(Cropping2D(cropping=(((random.uniform(60 - shift_delta , 60 + shift_delta)),(random.uniform(20 - shift_delta , 20 + shift_delta))), (1,1)), input_shape=(160,320,3)))
-
     model.add(Cropping2D(cropping=((60,20), (1,1)), input_shape=(160,320,3)))
-
     print('I am before call of Lambda')
     model.add(Lambda(resize_normalize, input_shape=(160, 320, 3), output_shape=(66, 200, 3)))
     #model.add(Lambda(lambda x: resize_normalize(x), input_shape=(80,318,3), output_shape=(66, 200, 3)))
@@ -110,24 +107,23 @@ from pathlib import Path
 import json
 
 def save_model(name):
-    
+    # svae model to json to be ready for transfer learning
     with open(name + '.json', 'w') as output:
         output.write(model.to_json())
-
+    # Save weights and architecture    
     model.save(name + '.h5')
     print('I saved the model')
+
 # ================================================================================================================
 # Training
 # ================================================================================================================
-numTimes = 1
 val_best = 999
 # preload e weights if u train the model after append more traing data makes training faster.
 #model = load_model('model.h5')
+# defien model as the defined archtitecture of nvidia cnn which shoould be used for training
 model = architecture()
 num_epochs= 10
 batch_size = 128
-
-
 #define the input data for the model.fit.generator
 print(" number of training samples: {}:".format(len(train_samples)))
 samples_per_epoch = len(train_samples) - (len(train_samples) % batch_size)
@@ -137,30 +133,27 @@ nb_val_samples=len(validation_samples) - (len(validation_samples) % batch_size)
 print('nb_val_epoch',nb_val_samples)
 print('number of epochs:', num_epochs)
 print('I am before call of model.fit generator')
-# training pipeline with keras
-history = model.fit_generator(#generator_fernando(X_train),
-        generate_samples(train_samples),
+# training pipeline with keras using a seld defined fucnction call of generator_sample
+history = model.fit_generator(generate_samples(train_samples),
         samples_per_epoch=samples_per_epoch,
         nb_epoch=num_epochs,
         validation_data=generate_samples(validation_samples, augment=False),
-        #validation_data=generator_fernando(y_valid),
         nb_val_samples=nb_val_samples
         )
-
-#conditioned save mdoel routine
+#conditioned save mdoel routine just when loss is better than before
 val_loss = history.history['val_loss'][0]
 if val_loss < val_best:
     val_best = val_loss
     save_model("model")
 
 print('Model fit generator finished')
-print(history.history.keys())
+print(history.history.keys()) # print out hte key from the history dictionary
+
 # ================================================================================================================
 # Evaluation of the trainig results
 # ================================================================================================================
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-
 ## plot the training and validation loss for each epoch
 print('I am ready to plot the evaluation')
 plt.plot(history.history['loss'])
@@ -171,9 +164,9 @@ plt.xlabel('epoch')
 plt.legend(['training set', 'validation set'], loc='upper right')
 plt.show(block=True)
 
+# just to end up the session--> there were some problems. the two line does not matter
 gc.collect()
 K.clear_session()
-
 
 print('===========================================================')
 print('traing session has finished')

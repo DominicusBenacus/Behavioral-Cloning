@@ -34,4 +34,4 @@ def generator_fernando(samples, batch_size=128):
 
             X_train = np.array(images)
             y_train = np.array(angles)
-            yield sklearn.utils.shuffle(X_train, y_train)
+            yield (X_train, y_train)
