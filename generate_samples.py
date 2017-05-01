@@ -39,6 +39,7 @@ def generate_samples(samples, augment=True, batch_size=128):
             for batch_sample in batch_samples:
                 for i in range(0, 3):
                     source_path = batch_sample[i]
+                    print('this is the format of source_path',source_path)
                     filename = os.path.split(source_path)
                     #filename = source_path.split('\\')[-1]
                     current_path = os.path.join('../data/IMG/',filename)
