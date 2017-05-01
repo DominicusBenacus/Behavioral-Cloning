@@ -5,7 +5,7 @@ import cv2
 import os
 from random import shuffle
 import sklearn
-from np.random import uniform
+from numpy.random import uniform
 
  
 
