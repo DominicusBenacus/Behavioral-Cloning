@@ -39,8 +39,9 @@ def generate_samples(samples, augment=True, batch_size=128):
             for batch_sample in batch_samples:
                 for i in range(0, 3):
                     source_path = batch_sample[i]
-                    filename = source_path.split('\\')[-1]
-                    current_path = '../data/IMG/'+source_path.split('/')[-1]
+                    filename = os.path.split(source_path)
+                    #filename = source_path.split('\\')[-1]
+                    current_path = os.path.join('../data/IMG/',filename)
                     #current_path = '../data/IMG/' + filename
                     image = cv2.imread(current_path)
 
