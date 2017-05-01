@@ -7,6 +7,7 @@ from keras.backend import tf as ktf
 
 
 def resize_normalize(image):
+    
     """
     Applies preprocessing pipeline to an image: crops `top` and `bottom`
     portions of image, resizes to 66*200 px and scales pixel values to [0, 1].

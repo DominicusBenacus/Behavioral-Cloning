@@ -11,6 +11,7 @@ from generator_fernando import generator_fernando
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
 import random
+import gc
 from keras import backend as K
 # ================================================================================================================
 # Read in rough balanced data Set
@@ -41,6 +42,8 @@ from keras.layers.core import Dropout, Lambda
 from keras.layers.convolutional import Convolution2D, Cropping2D
 from keras.optimizers import Adam
 from keras import models, optimizers, backend
+from keras.models import load_model
+
 print('I am before call of architecture')
 
 def architecture():
@@ -168,14 +171,8 @@ plt.xlabel('epoch')
 plt.legend(['training set', 'validation set'], loc='upper right')
 plt.show(block=True)
 
-    
-
-import gc
 gc.collect()
 K.clear_session()
-
-
-
 
 
 print('===========================================================')
