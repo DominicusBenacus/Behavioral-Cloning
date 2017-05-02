@@ -84,7 +84,7 @@ for batch_sample in batch_samples:
     current_path = '../data/IMG/' + filename
     image = cv2.imread(current_path)
 ```
-
+ For each I use a steering correction depending on which camera position was choosen between 0.25 -0.3
 ###### Horizontal flip
 For every batch we flip half of the frames horizontally and change the sign of the steering angle, thus yet increasing number of examples by a factor of 2.
 
@@ -95,24 +95,28 @@ For every batch we flip half of the frames horizontally and change the sign of t
  # #x[flip_indices] = cv2.flip(x[flip_indices],1)
  y[flip_indices] = -y[flip_indices] 
 ``` 
+ ###### Random brightness variation
 
-
+ ```python
+ # randomize brightness
+ image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+ image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+ random_brightness = .25 + np.random.uniform()
+ image[:, :, 2] = image[:, :, 2] * random_brightness
+ image = cv2.cvtColor(image, cv2.COLOR_HSV2RGB)
+```                
 
 ### Model Architecture and Training Strategy
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+My first step was to use a convolution neural network model similar to the model shown in the introduction. Just to get running in python.
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+Ok after some research and some talks to the mentors and other students I decided to implement the nvida model with kreas in python.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+For using the GPU advantage I decided to use the keras lambda layer for resize and normalize. Also I use a cropping layer.
 
-To combat the overfitting, I modified the model so that ...
-
-Then I ... 
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track to improve the driving behavior in these cases, I record more data in that region and record some recovery data as described inthe section of data augmentation.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
@@ -171,36 +175,29 @@ The model includes RELU layers to introduce nonlinearity, and the data is croppe
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![alt text][image2]
+![Midle Lane][image4]
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+![recovery center][image1]
+![recovery left][image2]
+![recovery right][image3]
 
-Then I repeated this process on track two in order to get more data points.
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped: No time for plot flipping data.
 
-![alt text][image6]
-![alt text][image7]
-
-Etc ....
 
 After the collection process, I had X number of data points. I then preprocessed this data by ...
 
 
 I finally randomly shuffled the data set and put Y% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 7. I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: ./examples/recover/center_2017_05_01_18_43_06_626.jpg "recovery"
+[image2]: ./examples/recover/left_2017_05_01_18_43_06_886.jpg "recovery"
+[image3]: ./examples/recover/right_2017_05_01_18_43_06_626.jpg "recovery"
+[image4]: ./examples/recover/center_2017_05_01_18_31_43_181.jpg"Middle lane image"
+
