@@ -153,6 +153,7 @@ print(history.history.keys()) # print out hte key from the history dictionary
 # Evaluation of the trainig results
 # ================================================================================================================
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 import matplotlib.image as mpimg
 ## plot the training and validation loss for each epoch
 print('I am ready to plot the evaluation')
