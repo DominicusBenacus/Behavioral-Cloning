@@ -8,7 +8,7 @@ import sklearn
 from numpy.random import uniform, randint
 
 # set up some parameter for dealing with the different camera positions
-left_right_steering_correction = [0, .25, -.25]
+left_right_steering_correction = [0, .20, -.20]
 STEERING_ANGLE = 3
 cameras = [0, 1, 2]
 def generate_samples(samples, augment=True, batch_size=128):
