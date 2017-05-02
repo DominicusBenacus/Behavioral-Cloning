@@ -163,7 +163,8 @@ plt.title('model mean squared error loss')
 plt.ylabel('mean squared error loss')
 plt.xlabel('epoch')
 plt.legend(['training set', 'validation set'], loc='upper right')
-plt.show(block=True)
+plt.show()
+#plt.show(block=True)
 
 # just to end up the session--> there were some problems. the two line does not matter
 gc.collect()
