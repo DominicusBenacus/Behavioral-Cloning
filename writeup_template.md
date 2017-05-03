@@ -50,27 +50,24 @@ The model.py file contains the code for training and saving the convolution neur
 ### Model Architecture and Training Strategy
 
 #### 1. An appropriate model architecture has been employed
-
 My model consists of a convolution neural network with 3 time 5*5 and two itmes 3*3 filter sizes and depths between 24 and 64 (model.py lines 74-96)
 #### 2. Attempts to reduce overfitting in the model
-
-I added dropout on  one flatten and every dense layers to prevent overfitting, and the model proved to generalise quite well. The model was trained using Adam optimiser with the default learning rate = 1e-04 and mean squared error as a loss function. I used 20% of the training data for validation. 
+I added dropout on one flatten and every dense layers to prevent overfitting, and the model proved to generalise quite well. The model was trained using Adam optimiser with the default learning rate and mean squared error as a loss function. I used 20% of the training data for validation. 
 
 The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
-
 The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 99).
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road.I have collected a dataset containing approximately 30 hour worth of driving data around one of the given tracks. This would contain both driving in “smooth” mode (staying right in the middle of the road for the whole lap), and “recovery” mode (letting the car drive off center and then interfering to steer it back in the middle).
+Training data was chosen to keep the vehicle driving on the road.I have collected a dataset containing approximately 1 hour worth of driving data around one of the given tracks. This would contain both driving in “smooth” mode (staying right in the middle of the road for the whole lap), and “recovery” mode (letting the car drive off center and then interfering to steer it back in the middle).
 
 The second step was to augument the data set. 
 * After generate the data I read in the .csv file liek described in model.py showen at start. 
 ##### Data augmentation
 
-* First step I used a python script to skip all rows with a steering angle of x <=0.001. Later I do not execute a balancign step. Instead I used more random selection methods and my computer mouse during driving and record driving data in the simulator. In this way I did not loos so many data. However, as many pointed out, there a couple of augmentation tricks that should let you extend the dataset significantly:
+* First step I used a python script to skip all rows with a steering angle of x <=0.4 like some forum mentors described. I only skip the steering values for laps which ar recorded controled by keyboard. For all laps I recorded controled by mouse I instead used more random selection methods. In this way I did not loos so many data. Also I figured out that using mouse produces a les amount of steering absolut steering values. So with keyboard there are often values +- 8degree and higher. With mouse the range is much more smaller. However, as many pointed out, there a couple of augmentation tricks that should let you extend the dataset significantly:
 
 ###### Left and right cameras
 Along with each sample we receive frames from 3 camera positions: left, center and right. Although we are only going to use central camera while driving, we can still use left and right cameras data during training after applying steering angle correction, increasing number of examples by a factor of 3.
@@ -106,23 +103,35 @@ For every batch we flip half of the frames horizontally and change the sign of t
  image = cv2.cvtColor(image, cv2.COLOR_HSV2RGB)
 ```                
 
+###### Cropping top and bottom
+
+```python
+    model.add(Cropping2D(cropping=((60,20), (1,1)), input_shape=(160,320,3)))
+```
+The reason is that only the road is important to make good predictions.
+
+##### Resize and normalize
+
+```python
+    model.add(Lambda(resize_normalize, input_shape=(160, 320, 3), output_shape=(66, 200, 3)))
+```
+So for resize and normalize I used the Lambda layer to get the full advantage of a aws GPU.
+
 ### Model Architecture and Training Strategy
 
 ####1. Solution Design Approach
 
 My first step was to use a convolution neural network model similar to the model shown in the introduction. Just to get running in python.
+```python
+model = Sequential()
+model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
+model.add(Flatten())
+model.add(Dense(1))
+```
 
-Ok after some research and some talks to the mentors and other students I decided to implement the nvida model with kreas in python.
+Ok after some research and some talks to the mentors and other students I decided to implement the nvida model with kreas in python. Later I realized that it is not everytime the best practice to use a proofen network according to the different data I recorded in this project
 
-For using the GPU advantage I decided to use the keras lambda layer for resize and normalize. Also I use a cropping layer.
-
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track to improve the driving behavior in these cases, I record more data in that region and record some recovery data as described inthe section of data augmentation.
-
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
-
-####2. Final Model Architecture
-
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes. The CNN archtitecture like described in the model.py file came out of the  [nvidia paper](https://arxiv.org/pdf/1604.07316.pdf)
+The CNN archtitecture like described in the model.py (# uncommended) file came out of the  [nvidia paper](https://arxiv.org/pdf/1604.07316.pdf)
 
 Here is a model summary on a glance generated during traing session:
 
@@ -169,13 +178,58 @@ Trainable params: 1,595,511
 Non-trainable params: 0
 ____________________________________________________________________________________________________ 
 
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track to improve the driving behavior in these cases, I record more data in that region and record some recovery data as described inthe section of data augmentation.
+
+####2. Final Model Architecture
+
+The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes. 
+
+Layer (type)                     Output Shape          Param #     Connected to
+====================================================================================================
+cropping2d_1 (Cropping2D)        (None, 80, 318, 3)    0           cropping2d_input_1[0][0]
+____________________________________________________________________________________________________
+lambda_1 (Lambda)                (None, 32, 128, 3)    0           cropping2d_1[0][0]
+____________________________________________________________________________________________________
+convolution2d_1 (Convolution2D)  (None, 30, 126, 16)   448         lambda_1[0][0]
+____________________________________________________________________________________________________
+maxpooling2d_1 (MaxPooling2D)    (None, 15, 63, 16)    0           convolution2d_1[0][0]
+____________________________________________________________________________________________________
+convolution2d_2 (Convolution2D)  (None, 13, 61, 32)    4640        maxpooling2d_1[0][0]
+____________________________________________________________________________________________________
+maxpooling2d_2 (MaxPooling2D)    (None, 6, 30, 32)     0           convolution2d_2[0][0]
+____________________________________________________________________________________________________
+convolution2d_3 (Convolution2D)  (None, 4, 28, 64)     18496       maxpooling2d_2[0][0]
+____________________________________________________________________________________________________
+maxpooling2d_3 (MaxPooling2D)    (None, 2, 14, 64)     0           convolution2d_3[0][0]
+____________________________________________________________________________________________________
+flatten_1 (Flatten)              (None, 1792)          0           maxpooling2d_3[0][0]
+____________________________________________________________________________________________________
+dense_1 (Dense)                  (None, 500)           896500      flatten_1[0][0]
+____________________________________________________________________________________________________
+dropout_1 (Dropout)              (None, 500)           0           dense_1[0][0]
+____________________________________________________________________________________________________
+dense_2 (Dense)                  (None, 100)           50100       dropout_1[0][0]
+____________________________________________________________________________________________________
+dropout_2 (Dropout)              (None, 100)           0           dense_2[0][0]
+____________________________________________________________________________________________________
+dense_3 (Dense)                  (None, 20)            2020        dropout_2[0][0]
+____________________________________________________________________________________________________
+dense_4 (Dense)                  (None, 1)             21          dense_3[0][0]
+====================================================================================================
+Total params: 972,225
+Trainable params: 972,225
+Non-trainable params: 0
+____________________________________________________________________________________________________
+
 The model includes RELU layers to introduce nonlinearity, and the data is cropped resized and normalized inside the model using a Keras cropping2D function and for resize and normalize a lambda layer (code line 74-78). I put the prprocessing inside the model architecture to achieve the complete benefit of using a GPU an the aws.
+
+At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road. like shown in this video
 
 ####3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
-![Midle Lane][image4]
+![Middle lane image][image4]
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
 
@@ -183,21 +237,31 @@ I then recorded the vehicle recovering from the left side and right sides of the
 ![recovery left][image2]
 ![recovery right][image3]
 
+Here some collection of facts I used for the final training session
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped: No time for plot flipping data.
+##### Startpoint
+number of training samples: 8289:
+samples_per_epoch 8192
+number of validation samples: 2073:
+nb_val_epoch 2048
+number of epochs: 20
+##### FirstEpoch  starts with this input
+Shape of image: (128, 160, 320, 3):
+Shape of steering angle: (128,):
+Image data shape after flipping images vertical = (128, 160, 320, 3)
+
+##### Results after Trianing
+8289/8192 [==============================] - 25s - loss: 0.0311 - val_loss: 0.0368
+I saved the model
+Model fit generator finished
 
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 7. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 20. I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
 [//]: # (Image References)
 
 [image1]: ./examples/recover/center_2017_05_01_18_43_06_626.jpg "recovery"
 [image2]: ./examples/recover/left_2017_05_01_18_43_06_886.jpg "recovery"
 [image3]: ./examples/recover/right_2017_05_01_18_43_06_626.jpg "recovery"
-[image4]: ./examples/recover/center_2017_05_01_18_31_43_181.jpg"Middle lane image"
+[image4]: ./examples/center_2017_05_01_18_31_43_181.jpg "Middle lane image"
 
