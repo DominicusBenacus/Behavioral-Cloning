@@ -139,7 +139,7 @@ val_best = 999
 #model = load_model('model.h5')
 # defien model as the defined archtitecture of nvidia cnn which shoould be used for training
 model = architecture()
-num_epochs= 7
+num_epochs= 15
 batch_size = 128
 #define the input data for the model.fit.generator
 print(" number of training samples: {}:".format(len(train_samples)))
