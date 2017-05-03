@@ -44,6 +44,7 @@ from keras.layers.convolutional import Convolution2D, Cropping2D
 from keras.optimizers import Adam
 from keras import models, optimizers, backend
 from keras.models import load_model
+from keras.layers import core, convolutional, pooling
 
 print('I am before call of architecture')
 def architecture():
