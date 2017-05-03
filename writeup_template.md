@@ -129,7 +129,7 @@ model.add(Flatten())
 model.add(Dense(1))
 ```
 
-Ok after some research and some talks to the mentors and other students I decided to implement the nvida model with kreas in python. Later I realized that it is not everytime the best practice to use a proofen network according to the different data I recorded in this project
+Ok second: After some research and some talks to the mentors and other students I decided to implement the nvida model with kreas in python. Later I realized that it is not everytime the best practice to use a proofen network according to the different data I recorded in this project. In my opinion the nvidea net is too big and fits more and other kind of input data better.
 
 The CNN archtitecture like described in the model.py (# uncommended) file came out of the  [nvidia paper](https://arxiv.org/pdf/1604.07316.pdf)
 
@@ -178,11 +178,13 @@ Trainable params: 1,595,511
 Non-trainable params: 0
 ____________________________________________________________________________________________________ 
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track to improve the driving behavior in these cases, I record more data in that region and record some recovery data as described inthe section of data augmentation.
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track to improve the driving behavior in these cases, I record more data in that region and record some recovery data as described inthe section of data augmentation. but it did not kept the car in the road. Because of this and the huge amount of data on this time point. I decided to reduce the complexity of the model to one I described int he next section. 
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes. 
+The final model architecture consisted of a convolution neural network with the following layers and layer sizes. 
+
+So this is the less complex model. I decrease the amount of conv layers and also the depth of filters becuae the data we used in P3 is not so comlicated. Further more the model use max pooling and a RELU activation function. 
 
 Layer (type)                     Output Shape          Param #     Connected to
 ====================================================================================================
