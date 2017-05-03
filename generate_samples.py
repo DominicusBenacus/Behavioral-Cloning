@@ -8,7 +8,7 @@ import sklearn
 from numpy.random import uniform, randint
 
 # set up some parameter for dealing with the different camera positions
-left_right_steering_correction = [0, .30, -.30]
+left_right_steering_correction = [0, .25, -.25]
 STEERING_ANGLE = 3
 cameras = [0, 1, 2]
 def generate_samples(samples, augment=True, batch_size=128):
@@ -59,7 +59,7 @@ def generate_samples(samples, augment=True, batch_size=128):
                 steering_angles.append(steering_angle)
 
             #print('this is the format of current path', current_path)
-            print('this is the format of filename', filename)
+            #print('this is the format of filename', filename)
             #print('this is the format of source_path', source_path)          
             # create a numpy array because keras expect a numpy array as input
             x = np.array(images)
