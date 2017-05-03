@@ -8,7 +8,7 @@ import sklearn
 from numpy.random import uniform, randint
 
 # set up some parameter for dealing with the different camera positions
-left_right_steering_correction = [0, .25, -.35]
+left_right_steering_correction = [0, .30, -.30]
 STEERING_ANGLE = 3
 cameras = [0, 1, 2]
 def generate_samples(samples, augment=True, batch_size=128):
@@ -45,7 +45,7 @@ def generate_samples(samples, augment=True, batch_size=128):
                 # randomize brightness
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                 image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
-                random_brightness = .28 + np.random.uniform()
+                random_brightness = .25 + np.random.uniform()
                 image[:, :, 2] = image[:, :, 2] * random_brightness
                 image = cv2.cvtColor(image, cv2.COLOR_HSV2RGB)
 
