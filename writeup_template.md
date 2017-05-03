@@ -237,6 +237,9 @@ I then recorded the vehicle recovering from the left side and right sides of the
 ![recovery left][image2]
 ![recovery right][image3]
 
+So after some traings and test sessions I often merge new traing data into th ealready used and train the model from scratch. According to time for training this was ok because I uswd aws. Further more I used sometimes a pretrained model I saved if I get a better loss than before. But for pretrained models one need to deal much more with hyperparameters and I want to keep things easy and get back to train the model from scratch.
+
+
 Here some collection of facts I used for the final training session
 
 ##### Startpoint
@@ -254,7 +257,6 @@ Image data shape after flipping images vertical = (128, 160, 320, 3)
 8289/8192 [==============================] - 25s - loss: 0.0311 - val_loss: 0.0368
 I saved the model
 Model fit generator finished
-
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 20. I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
