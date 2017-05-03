@@ -78,7 +78,6 @@ def architecture():
     model.add(Lambda(resize_normalize, input_shape=(160, 320, 3), output_shape=(32, 128, 3)))
 
     # Model architecture
-    model = models.Sequential()
     model.add(Convolution2D(16, 3, 3, input_shape=(32, 128, 3), activation='relu'))
     model.add(pooling.MaxPooling2D(pool_size=(2, 2)))
     model.add(Convolution2D(32, 3, 3, activation='relu'))
