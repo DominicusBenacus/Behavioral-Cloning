@@ -59,7 +59,7 @@ def architecture():
         # resize to width 200 and high 66 liek recommended
         # in the nvidia paper for the used CNN
         # image = cv2.resize(image, (66, 200)) #first try
-        resized = ktf.image.resize_images(image, (66, 200))
+        resized = ktf.image.resize_images(image, (32, 200))
         #normalize 0-1
         resized = resized/255.0 - 0.5
 
@@ -68,35 +68,52 @@ def architecture():
     print('I am inside call of architecture')
     #initialize model
     model = Sequential()
-    dropout = 0.5
+    #dropout = 0.5
     nonlinear = 'tanh'
     print('I am before call of cropping layer')
     ### Convolution layers and parameters were taken from the "nvidia paper" on end-to-end autonomous steering.
     model.add(Cropping2D(cropping=((60,20), (1,1)), input_shape=(160,320,3)))
     print('I am before call of Lambda')
-    model.add(Lambda(resize_normalize, input_shape=(160, 320, 3), output_shape=(66, 200, 3)))
-    #model.add(Lambda(lambda x: resize_normalize(x), input_shape=(80,318,3), output_shape=(66, 200, 3)))
-    model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))
-    model.add(Convolution2D(36, 5, 5, name='conv2', subsample=(2, 2), activation=nonlinear))
-    model.add(Convolution2D(48, 5, 5, name='conv3', subsample=(2, 2), activation=nonlinear))
-    model.add(Convolution2D(64, 3, 3, name='conv4', activation=nonlinear))
-    model.add(Convolution2D(64, 3, 3, name='conv5', activation=nonlinear))
+    model.add(Lambda(resize_normalize, input_shape=(160, 320, 3), output_shape=(32, 128, 3)))
 
-    ### Regression
-    model.add(Flatten())
-    model.add(Dropout(dropout))
-    model.add(Dense(1164, name='hidden1', activation=nonlinear))
-    model.add(Dropout(dropout))
-    model.add(Dense(100, name='hidden2', activation=nonlinear))
-    model.add(Dropout(dropout))
-    model.add(Dense(50, name='hidden3', activation=nonlinear))
-    model.add(Dropout(dropout))
-    model.add(Dense(10, name='hidden4', activation=nonlinear))
-    model.add(Dropout(dropout))
-    model.add(Dense(1, name='output', activation=nonlinear))    
+    # Model architecture
+    model = models.Sequential()
+    model.add(convolutional.Convolution2D(16, 3, 3, input_shape=(32, 128, 3), activation='relu'))
+    model.add(pooling.MaxPooling2D(pool_size=(2, 2)))
+    model.add(convolutional.Convolution2D(32, 3, 3, activation='relu'))
+    model.add(pooling.MaxPooling2D(pool_size=(2, 2)))
+    model.add(convolutional.Convolution2D(64, 3, 3, activation='relu'))
+    model.add(pooling.MaxPooling2D(pool_size=(2, 2)))
+    model.add(core.Flatten())
+    model.add(core.Dense(500, activation='relu'))
+    model.add(core.Dropout(.5))
+    model.add(core.Dense(100, activation='relu'))
+    model.add(core.Dropout(.25))
+    model.add(core.Dense(20, activation='relu'))
+    model.add(core.Dense(1))
+    model.compile(optimizer=optimizers.Adam(lr=1e-04), loss='mean_squared_error')
+    #model.add(Lambda(lambda x: resize_normalize(x), input_shape=(80,318,3), output_shape=(66, 200, 3)))
+    # model.add(Convolution2D(24, 5, 5, name='conv1', subsample=(2, 2), activation=nonlinear))
+    # model.add(Convolution2D(36, 5, 5, name='conv2', subsample=(2, 2), activation=nonlinear))
+    # model.add(Convolution2D(48, 5, 5, name='conv3', subsample=(2, 2), activation=nonlinear))
+    # model.add(Convolution2D(64, 3, 3, name='conv4', activation=nonlinear))
+    # model.add(Convolution2D(64, 3, 3, name='conv5', activation=nonlinear))
+
+    # ### Regression
+    # model.add(Flatten())
+    # model.add(Dropout(dropout))
+    # model.add(Dense(1164, name='hidden1', activation=nonlinear))
+    # model.add(Dropout(dropout))
+    # model.add(Dense(100, name='hidden2', activation=nonlinear))
+    # model.add(Dropout(dropout))
+    # model.add(Dense(50, name='hidden3', activation=nonlinear))
+    # model.add(Dropout(dropout))
+    # model.add(Dense(10, name='hidden4', activation=nonlinear))
+    # model.add(Dropout(dropout))
+    # model.add(Dense(1, name='output', activation=nonlinear))    
     
-    #model.compile(optimizer=optimizers.Adam(lr=1e-04), loss='mean_squared_error')
-    model.compile(optimizer='adam', loss='mse')
+    # #model.compile(optimizer=optimizers.Adam(lr=1e-04), loss='mean_squared_error')
+    # model.compile(optimizer='adam', loss='mse')
     print('I am finished build the model')
     print(model.summary())
     return model
