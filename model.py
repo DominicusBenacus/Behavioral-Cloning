@@ -78,11 +78,11 @@ def architecture():
 
     # Model architecture
     model = models.Sequential()
-    model.add(convolutional.Convolution2D(16, 3, 3, input_shape=(32, 128, 3), activation='relu'))
+    model.add(Convolution2D(16, 3, 3, input_shape=(32, 128, 3), activation='relu'))
     model.add(pooling.MaxPooling2D(pool_size=(2, 2)))
-    model.add(convolutional.Convolution2D(32, 3, 3, activation='relu'))
+    model.add(Convolution2D(32, 3, 3, activation='relu'))
     model.add(pooling.MaxPooling2D(pool_size=(2, 2)))
-    model.add(convolutional.Convolution2D(64, 3, 3, activation='relu'))
+    model.add(Convolution2D(64, 3, 3, activation='relu'))
     model.add(pooling.MaxPooling2D(pool_size=(2, 2)))
     model.add(core.Flatten())
     model.add(core.Dense(500, activation='relu'))
