@@ -60,7 +60,7 @@ def architecture():
         # resize to width 200 and high 66 liek recommended
         # in the nvidia paper for the used CNN
         # image = cv2.resize(image, (66, 200)) #first try
-        resized = ktf.image.resize_images(image, (32, 200))
+        resized = ktf.image.resize_images(image, (32, 128))
         #normalize 0-1
         resized = resized/255.0 - 0.5
 
