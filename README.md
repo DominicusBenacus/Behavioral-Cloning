@@ -1,11 +1,5 @@
 #**Behavioral Cloning** 
 
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
 **Behavioral Cloning Project**
 
 The goals / steps of this project are the following:
@@ -14,9 +8,6 @@ The goals / steps of this project are the following:
 * Train and validate the model with a training and validation set
 * Test that the model successfully drives around track one without leaving the road
 * Summarize the results with a written report
-
-
-
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -239,7 +230,7 @@ I then recorded the vehicle recovering from the left side and right sides of the
 ![recovery left][image2]
 ![recovery right][image3]
 
-So after some traings and test sessions I often merge new traing data into th ealready used and train the model from scratch. According to time for training this was ok because I uswd aws. Further more I used sometimes a pretrained model I saved if I get a better loss than before. But for pretrained models one need to deal much more with hyperparameters and I want to keep things easy and get back to train the model from scratch.
+So after some trainings and test sessions I often merge new traing data into th ealready used and train the model from scratch. According to time for training this was ok because I used aws. Further more I used sometimes a pretrained model I saved if I get a better loss than before. But for pretrained models one need to deal much more with hyperparameters and I want to keep things easy and get back to train the model from scratch.
 
 
 Here some collection of facts I used for the final training session
