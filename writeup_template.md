@@ -119,7 +119,7 @@ So for resize and normalize I used the Lambda layer to get the full advantage of
 
 ### Model Architecture and Training Strategy
 
-####1. Solution Design Approach
+#### 1. Solution Design Approach
 
 My first step was to use a convolution neural network model similar to the model shown in the introduction. Just to get running in python.
 ```python
@@ -180,7 +180,7 @@ ________________________________________________________________________________
 
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track to improve the driving behavior in these cases, I record more data in that region and record some recovery data as described inthe section of data augmentation. but it did not kept the car in the road. Because of this and the huge amount of data on this time point. I decided to reduce the complexity of the model to one I described int he next section. 
 
-####2. Final Model Architecture
+#### 2. Final Model Architecture
 
 The final model architecture consisted of a convolution neural network with the following layers and layer sizes. 
 
@@ -227,7 +227,7 @@ The model includes RELU layers to introduce nonlinearity, and the data is croppe
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road. like shown in this video
 
-####3. Creation of the Training Set & Training Process
+#### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
 
